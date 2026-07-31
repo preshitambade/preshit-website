@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Take the Augusta+ Assessment | Preshit Ambade</title>
+  <meta name="description" content="Take the Augusta+ workplace well-being assessment and receive an instant, profession-specific score." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="wrap navbar">
+      <a href="index.html" class="brand">Preshit <b>Ambade</b></a>
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="augusta-scale.html" class="active">Augusta+ Scale</a>
+        <a href="writing.html">Writing</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="page-hero" style="padding-bottom:40px">
+    <div class="aurora"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--gold)">Augusta+ Assessment</span>
+      <h1>Rate your workplace well-being</h1>
+      <p>Answer a few questions honestly and get an instant score interpreted against thresholds for your profession. Everything runs in your browser — nothing is stored or shared.</p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:40px">
+    <div class="wrap">
+      <div class="quiz-shell reveal" id="quiz">
+
+        <div class="quiz-progress"><div class="quiz-progress-fill" id="pfill"></div></div>
+        <div class="quiz-progress-meta"><span id="pmeta">Getting started</span><span id="pcount"></span></div>
+
+        <!-- Step 0: Profession picker -->
+        <div class="quiz-step active" data-step="0">
+          <h2>First — what best describes your work?</h2>
+          <p class="q-hint">Your profession sets the thresholds used to interpret your final score.</p>
+          <div class="prof-grid" id="profGrid"></div>
+          <div class="quiz-nav">
+            <span></span>
+            <button class="btn btn-primary" id="startBtn" disabled>Start assessment →</button>
+          </div>
+        </div>
+
+        <!-- Item steps render here dynamically -->
+        <div id="itemSteps"></div>
+
+        <!-- Result step -->
+        <div class="quiz-step" data-step="result">
+          <div class="result-hero">
+            <p class="q-hint" style="margin:0">Your Augusta+ score</p>
+            <div class="result-score" id="resScore">—</div>
+            <div class="result-tier" id="resTier">—</div>
+            <div class="result-gauge"><div class="result-marker" id="resMarker" style="left:50%"></div></div>
+            <div class="gauge-labels"><span>Low</span><span>Moderate</span><span>High</span></div>
+          </div>
+
+          <div class="result-context">
+            <h3 id="resTitle">What this means</h3>
+            <p id="resBody">—</p>
+          </div>
+
+          <!-- Per-domain scores (Surgeon General framework) -->
+          <div class="domain-scores" id="domainScores">
+            <h3>Your score by domain</h3>
+            <div id="domainRows"><!-- rendered by finish() --></div>
+            <p style="text-align:center;margin-top:16px;font-size:.82rem;color:var(--ink-soft)">
+              Domains adapted from the <a href="https://www.hhs.gov/surgeongeneral/priorities/workplace-well-being/index.html" target="_blank" rel="noopener" style="color:var(--coral);font-weight:600;text-decoration:none">US Surgeon General&rsquo;s Framework for Workplace Mental Health &amp; Well-Being</a>.
+            </p>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Please note:</strong> This tool is intended for reflection and research use only. It is not a diagnostic instrument and does not replace advice from a mental-health or medical professional.
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-outline" id="restartBtn">Retake</button>
+            <a class="btn btn-primary" href="contact.html">Discuss the results with me →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fbrand">Preshit <b>Ambade</b></div>
+      <div class="flinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="augusta-scale.html">Augusta+ Scale</a>
+        <a href="augusta-assessment.html">Take Assessment</a>
+        <a href="writing.html">Writing</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="copy">© <span id="year">2026</span> Dr. Preshit Nemdas Ambade · Mount Pleasant, MI</div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+  /* ================================================================
+     ⚠️ AUGUSTA+ SCALE CONFIGURATION — REPLACE THESE PLACEHOLDER VALUES
+     WITH THE VALIDATED ITEMS, PROFESSIONS AND THRESHOLDS FROM YOUR STUDY
+     ----------------------------------------------------------------
+     The rest of the page is fully generic — it will automatically
+     handle any number of items and any number of professions.
+
+     ITEMS:
+       - Set `reversed: true` for negatively-worded items (they'll be
+         reverse-scored automatically).
+       - Add or remove items freely.
+
+     PROFESSIONS:
+       - Each profession has three thresholds (low / moderate / high).
+         A score at or above `low` and below `moderate` = LOW band;
+         at or above `moderate` and below `high` = MODERATE; ≥ high = HIGH.
+       - Adjust cutoffs to those derived from your validation samples.
+   ================================================================ */
+  const AUGUSTA_CONFIG = {
+    scale: {
+      min: 1,
+      max: 5,
+      labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+    },
+
+    /* The five domains of the US Surgeon General's Framework.
+       `id` matches the `domain` field on each item and the ds-color-* CSS class. */
+    domains: [
+      { id: "protection", label: "Protection from Harm" },
+      { id: "connection", label: "Connection & Community" },
+      { id: "harmony",    label: "Work-Life Harmony" },
+      { id: "mattering",  label: "Mattering at Work" },
+      { id: "growth",     label: "Opportunity for Growth" }
+    ],
+
+    /* Every item MUST have a `domain` matching an id above.
+       `reversed: true` items are automatically reverse-scored.
+       Placeholder items — swap for the validated Augusta+ items. */
+    items: [
+      { text: "I feel a sense of purpose and meaning in the work I do.",              reversed: false, domain: "mattering"  },
+      { text: "I have enough autonomy to make important decisions in my role.",       reversed: false, domain: "growth"     },
+      { text: "My workplace provides adequate support when I face difficult tasks.",  reversed: false, domain: "connection" },
+      { text: "I often feel emotionally drained by the end of the workday.",          reversed: true,  domain: "protection" },
+      { text: "I can maintain a healthy balance between my work and personal life.",  reversed: false, domain: "harmony"    },
+      { text: "I feel recognized and appreciated for my contributions.",              reversed: false, domain: "mattering"  },
+      { text: "I dread going to work most days.",                                     reversed: true,  domain: "protection" },
+      { text: "The people I work with are supportive and respectful.",                reversed: false, domain: "connection" },
+      { text: "I have opportunities to grow and develop in my role.",                 reversed: false, domain: "growth"     },
+      { text: "I feel physically exhausted because of my work.",                      reversed: true,  domain: "harmony"    }
+      /* Add more items here as needed. */
+    ],
+
+    /* Icons are cosmetic; feel free to change or use text labels only. */
+    professions: [
+      { id: "physician",   label: "Physician",             icon: "🩺",
+        thresholds: { moderate: 30, high: 40 } },
+      { id: "nurse",       label: "Nurse",                 icon: "💉",
+        thresholds: { moderate: 28, high: 38 } },
+      { id: "public_health", label: "Public-Health Professional", icon: "🌍",
+        thresholds: { moderate: 30, high: 40 } },
+      { id: "researcher",  label: "Academic Researcher",   icon: "🔬",
+        thresholds: { moderate: 32, high: 42 } },
+      { id: "administrator", label: "Health Administrator", icon: "📋",
+        thresholds: { moderate: 30, high: 40 } },
+      { id: "other",       label: "Other Profession",      icon: "👥",
+        thresholds: { moderate: 30, high: 40 } }
+    ],
+
+    /* Text shown after scoring. Free to reword. */
+    interpretations: {
+      low: {
+        title: "Low workplace well-being",
+        body: "Your score suggests significant strain in your work environment relative to peers in your profession. Look at the domain-specific bars below — they show which of the five essentials feel hardest right now. Consider whether reaching out to a supervisor, colleague, or mental-health professional could help."
+      },
+      moderate: {
+        title: "Moderate workplace well-being",
+        body: "Your score falls in a middle band — you have real strengths at work but also some meaningful strain. The domain bars below show where the strain is concentrated (protection, connection, harmony, mattering, or growth) — often the smallest changes there produce the biggest gains."
+      },
+      high: {
+        title: "High workplace well-being",
+        body: "Your score reflects strong workplace well-being for your profession — meaningful engagement, sustainable energy, and supportive conditions across the framework&rsquo;s five domains. Notice what&rsquo;s working, and consider what you might do to help protect it (and share it with colleagues) over the long run."
+      }
+    }
+  };
+  /* =================== END CONFIG =================== */
+
+  const state = {
+    profession: null,
+    answers: {},
+    currentStep: 0,     // 0 = profession picker, 1..N = items, N+1 = result
+    totalSteps: 1 + AUGUSTA_CONFIG.items.length
+  };
+
+  // ---------- Build profession picker ----------
+  const profGrid = document.getElementById('profGrid');
+  AUGUSTA_CONFIG.professions.forEach(p => {
+    const el = document.createElement('div');
+    el.className = 'prof-opt';
+    el.dataset.id = p.id;
+    el.innerHTML = `<div class="p-ico">${p.icon}</div><div class="p-label">${p.label}</div>`;
+    el.addEventListener('click', () => {
+      document.querySelectorAll('.prof-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      state.profession = p.id;
+      document.getElementById('startBtn').disabled = false;
+    });
+    profGrid.appendChild(el);
+  });
+
+  // ---------- Build item steps ----------
+  const itemSteps = document.getElementById('itemSteps');
+  AUGUSTA_CONFIG.items.forEach((item, i) => {
+    const stepIdx = i + 1;
+    const step = document.createElement('div');
+    step.className = 'quiz-step';
+    step.dataset.step = String(stepIdx);
+    step.innerHTML = `
+      <h2>${item.text}</h2>
+      <p class="q-hint">Select the option that most reflects your experience over the past two weeks.</p>
+      <div class="likert-row" data-idx="${i}">
+        ${AUGUSTA_CONFIG.scale.labels.map((lbl, k) => `
+          <label class="likert-opt" data-value="${k + AUGUSTA_CONFIG.scale.min}">
+            <div class="dot-num">${k + AUGUSTA_CONFIG.scale.min}</div>
+            <span>${lbl}</span>
+            <input type="radio" name="q${i}" value="${k + AUGUSTA_CONFIG.scale.min}" class="likert-input" />
+          </label>
+        `).join('')}
+      </div>
+      <div class="quiz-nav">
+        <button class="btn btn-outline back-btn">← Back</button>
+        <button class="btn btn-primary next-btn" disabled>${i === AUGUSTA_CONFIG.items.length - 1 ? 'See my score →' : 'Next →'}</button>
+      </div>`;
+    itemSteps.appendChild(step);
+
+    // wire up Likert selection
+    step.querySelectorAll('.likert-opt').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.preventDefault();
+        step.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        state.answers[i] = Number(opt.dataset.value);
+        step.querySelector('.next-btn').disabled = false;
+      });
+    });
+
+    step.querySelector('.next-btn').addEventListener('click', () => goto(state.currentStep + 1));
+    step.querySelector('.back-btn').addEventListener('click', () => goto(state.currentStep - 1));
+  });
+
+  document.getElementById('startBtn').addEventListener('click', () => goto(1));
+  document.getElementById('restartBtn').addEventListener('click', () => {
+    state.profession = null;
+    state.answers = {};
+    document.querySelectorAll('.prof-opt').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+    document.querySelectorAll('.next-btn').forEach(b => b.disabled = true);
+    document.getElementById('startBtn').disabled = true;
+    goto(0);
+  });
+
+  // ---------- Navigation & progress ----------
+  function goto(step) {
+    document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+    if (step > AUGUSTA_CONFIG.items.length) {
+      finish();
+      document.querySelector('[data-step="result"]').classList.add('active');
+      updateProgress(state.totalSteps);
+    } else {
+      document.querySelector(`[data-step="${step}"]`).classList.add('active');
+      state.currentStep = step;
+      updateProgress(step);
+    }
+    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function updateProgress(step) {
+    const pct = Math.min(100, Math.round((step / state.totalSteps) * 100));
+    document.getElementById('pfill').style.width = pct + '%';
+    if (step === 0) {
+      document.getElementById('pmeta').textContent = 'Getting started';
+      document.getElementById('pcount').textContent = '';
+    } else if (step > AUGUSTA_CONFIG.items.length) {
+      document.getElementById('pmeta').textContent = 'Complete';
+      document.getElementById('pcount').textContent = '100%';
+    } else {
+      document.getElementById('pmeta').textContent = `Question ${step} of ${AUGUSTA_CONFIG.items.length}`;
+      document.getElementById('pcount').textContent = pct + '%';
+    }
+  }
+
+  // ---------- Scoring ----------
+  function finish() {
+    const { min, max } = AUGUSTA_CONFIG.scale;
+    const scaled = v => (v == null ? min : v); // treat unanswered as min
+
+    // Total + per-domain accumulation in a single pass
+    let raw = 0;
+    const domainTotals = {};   // { domainId: {score, max} }
+    (AUGUSTA_CONFIG.domains || []).forEach(d => { domainTotals[d.id] = { score: 0, max: 0 }; });
+
+    AUGUSTA_CONFIG.items.forEach((item, i) => {
+      const v = scaled(state.answers[i]);
+      const contribution = item.reversed ? (min + max - v) : v;
+      raw += contribution;
+      const d = item.domain;
+      if (d && domainTotals[d]) {
+        domainTotals[d].score += contribution;
+        domainTotals[d].max   += max;
+      }
+    });
+
+    const maxScore = AUGUSTA_CONFIG.items.length * max;
+
+    // Overall tier from profession thresholds
+    const prof = AUGUSTA_CONFIG.professions.find(p => p.id === state.profession)
+              || AUGUSTA_CONFIG.professions[0];
+    const t = prof.thresholds;
+    let tier, tierClass, interpKey;
+    if (raw < t.moderate)  { interpKey = 'low';      tierClass = 'tier-low';  tier = 'LOW · ' + prof.label; }
+    else if (raw < t.high) { interpKey = 'moderate'; tierClass = 'tier-mod';  tier = 'MODERATE · ' + prof.label; }
+    else                   { interpKey = 'high';     tierClass = 'tier-high'; tier = 'HIGH · ' + prof.label; }
+    const interp = AUGUSTA_CONFIG.interpretations[interpKey];
+
+    document.getElementById('resScore').textContent = raw + ' / ' + maxScore;
+    const tierEl = document.getElementById('resTier');
+    tierEl.textContent = tier; tierEl.className = 'result-tier ' + tierClass;
+    document.getElementById('resTitle').textContent = interp.title;
+    document.getElementById('resBody').innerHTML = interp.body;
+
+    const pct = Math.max(2, Math.min(98, Math.round((raw / maxScore) * 100)));
+    document.getElementById('resMarker').style.left = pct + '%';
+
+    // Render per-domain bars
+    const rows = (AUGUSTA_CONFIG.domains || []).map(d => {
+      const t = domainTotals[d.id];
+      if (!t || t.max === 0) return '';
+      const pct = Math.round((t.score / t.max) * 100);
+      return `
+        <div class="ds-row">
+          <div class="ds-meta">
+            <span class="ds-name">${d.label}</span>
+            <span class="ds-value">${t.score} / ${t.max} · ${pct}%</span>
+          </div>
+          <div class="ds-track"><div class="ds-fill ds-color-${d.id}" style="width:${pct}%"></div></div>
+        </div>`;
+    }).join('');
+    document.getElementById('domainRows').innerHTML = rows;
+  }
+
+  updateProgress(0);
+  </script>
+</body>
+</html>

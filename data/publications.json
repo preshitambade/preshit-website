@@ -1,0 +1,30 @@
+{
+  "updated": "2026-07-29",
+  "source": "seed — replaced by ORCID sync on first workflow run",
+  "publications": [
+    {
+      "authors": "MacKinnon, N. J., Emery, V., Waller, J., Ange, B., Ambade, P., Gunja, M., & Watson, E.",
+      "year": 2023,
+      "title": "Mapping Health Disparities in 11 High-Income Nations",
+      "venue": "JAMA Network Open, 6(7), e2322310",
+      "doi": "10.1001/jamanetworkopen.2023.22310",
+      "url": ""
+    },
+    {
+      "authors": "Ambade, P., Pakhale, S., & Rahman, T.",
+      "year": 2022,
+      "title": "Explaining Caste-Based Disparities in Enrollment for National Health Insurance Program in India: A Decomposition Analysis",
+      "venue": "Journal of Racial and Ethnic Health Disparities",
+      "doi": "10.1007/s40615-022-01374-8",
+      "url": ""
+    },
+    {
+      "authors": "Imran, M., Uddin, A., Ambade, P. N., et al.",
+      "year": 2022,
+      "title": "SARS-CoV-2 RT-PCR positivity in relation to demographic characteristics and symptoms in COVID-19 patients, Khyber Pakhtunkhwa, Pakistan: A prospective cohort study",
+      "venue": "Tropical Medicine & International Health, 116(8), 750–757",
+      "doi": "10.1093/trstmh/trac057",
+      "url": ""
+    }
+  ]
+}

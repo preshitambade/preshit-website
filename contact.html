@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact | Preshit Ambade</title>
+  <meta name="description" content="Get in touch with Dr. Preshit Ambade (DrPH, MHA, BAMS, PNAP) — Assistant Professor of Research at the Central Michigan University College of Medicine." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="wrap navbar">
+      <a href="index.html" class="brand">Preshit <b>Ambade</b></a>
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="augusta-scale.html">Augusta+ Scale</a>
+        <a href="writing.html">Writing</a>
+        <a href="contact.html" class="nav-cta active">Contact</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="page-hero">
+    <div class="aurora"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--gold)">Contact</span>
+      <h1>Let&rsquo;s talk research, teaching, or collaboration</h1>
+      <p>Reach out if you&rsquo;re interested in my working papers, want to collaborate on a project, are curious about the Augusta+ scale, or just want to say hello.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div class="reveal contact-info">
+          <div class="contact-line">
+            <div class="ci">🏛️</div>
+            <div>
+              <h3>Institution</h3>
+              <p>Covenant HealthCare College of Medicine<br />
+              <em>&amp;</em> Herbert H. and Grace A. Dow College of Health Professions<br />
+              <strong>Central Michigan University</strong></p>
+            </div>
+          </div>
+          <div class="contact-line">
+            <div class="ci">📍</div>
+            <div><h3>Office</h3><p>Foust 007 · 600 East Preston Street<br />Mount Pleasant, Michigan (MI) 48859</p></div>
+          </div>
+          <div class="contact-line">
+            <div class="ci">📧</div>
+            <div><h3>Email</h3><a href="mailto:preshitambade@gmail.com">preshitambade@gmail.com</a></div>
+          </div>
+          <div class="contact-line">
+            <div class="ci">🏫</div>
+            <div><h3>CMU Faculty Profile</h3><a href="https://www.cmich.edu/people/PRESHIT-AMBADE" target="_blank" rel="noopener">cmich.edu/people/PRESHIT-AMBADE →</a></div>
+          </div>
+          <div class="contact-line">
+            <div class="ci">🎓</div>
+            <div><h3>Scholar</h3><a href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID" target="_blank" rel="noopener">Google Scholar profile →</a></div>
+          </div>
+          <div class="contact-line">
+            <div class="ci">💼</div>
+            <div><h3>LinkedIn</h3><a href="https://www.linkedin.com/" target="_blank" rel="noopener">Connect on LinkedIn →</a></div>
+          </div>
+        </div>
+
+        <form class="form-card reveal" onsubmit="handleContact(event)">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" required />
+          </div>
+          <div class="field">
+            <label for="email">Your email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="field">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send message →</button>
+          <p id="form-status" style="margin:14px 0 0;font-size:.88rem;color:var(--ink-soft);text-align:center"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fbrand">Preshit <b>Ambade</b></div>
+      <div class="flinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="augusta-scale.html">Augusta+ Scale</a>
+        <a href="augusta-assessment.html">Take Assessment</a>
+        <a href="writing.html">Writing</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="copy">© <span id="year">2026</span> Dr. Preshit Nemdas Ambade · Mount Pleasant, MI</div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    // The form opens the user's email client with a pre-filled message.
+    // For a real backend, connect this to Formspree (https://formspree.io) or Netlify Forms — both free.
+    function handleContact(e) {
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const subject = document.getElementById('subject').value || 'Website inquiry';
+      const message = document.getElementById('message').value;
+      const body = `From: ${name} <${email}>%0D%0A%0D%0A${encodeURIComponent(message)}`;
+      window.location.href = `mailto:preshitambade@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+      document.getElementById('form-status').textContent = 'Opening your email client…';
+    }
+  </script>
+</body>
+</html>

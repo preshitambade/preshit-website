@@ -1,0 +1,18 @@
+{
+  "updated": "2026-07-29",
+  "_note": "Edit this file every few months as you present. Just add a new entry at the top — the site picks it up automatically.",
+  "conferences": [
+    {
+      "year": 2023,
+      "name": "American Public Health Association Annual Meeting & Conference"
+    },
+    {
+      "year": 2023,
+      "name": "Southern Economic Association — 93rd Annual Meeting"
+    },
+    {
+      "year": 2022,
+      "name": "Georgia Public Health Association Annual Meeting"
+    }
+  ]
+}

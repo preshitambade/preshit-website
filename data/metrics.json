@@ -1,0 +1,9 @@
+{
+  "citations": 0,
+  "h_index": 0,
+  "i10_index": 0,
+  "publications": 0,
+  "scholar_url": "https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID",
+  "updated": "2026-07-29",
+  "_note": "Replace scholar_url with your real Google Scholar profile URL. GitHub Action will overwrite the numeric fields weekly."
+}
