@@ -143,39 +143,39 @@
     /* The five domains of the US Surgeon General's Framework.
        `id` matches the `domain` field on each item and the ds-color-* CSS class. */
     domains: [
-      { id: "Protection", label: "Protection from Harm" },
-      { id: "Connection", label: "Connection & Community" },
-      { id: "Harmony",    label: "Work-Life Harmony" },
-      { id: "Mattering",  label: "Mattering at Work" },
-      { id: "Growth",     label: "Opportunity for Growth" }
+      { id: "protection", label: "Protection from Harm" },
+      { id: "connection", label: "Connection & Community" },
+      { id: "harmony",    label: "Work-Life Harmony" },
+      { id: "mattering",  label: "Mattering at Work" },
+      { id: "growth",     label: "Opportunity for Growth" }
     ],
 
     /* Every item MUST have a `domain` matching an id above.
        `reversed: true` items are automatically reverse-scored.
        Placeholder items — swap for the validated Augusta+ Scale items. */
     items: [
-      { text: "I feel safe from any physical harm.",                                                                                   reversed: false, domain: "Protection"  },
-      { text: "I am familiar with the policies and programs to ensure fair treatment and to appreciate different perspectives.",       reversed: false, domain: "Protection"     },
-      { text: "I feel safe from psychological harm.",                                                                                  reversed: false, domain: "Protection" },
-      { text: "I can talk freely about mental health issues.",                                                                         reversed: false,  domain: "Protection" },
-      { text: "I can get support for mental health issues.",                                                                           reversed: false, domain: "Protection"    },
-      { text: "I am able to get adequate rest.",                                                                                       reversed: false, domain: "Protection"  },
-      { text: "I am able to collaborate with others and work in a team.",                                                              reversed: false,  domain: "Connection" },
-      { text: "I am able to create trusted relationships with colleagues.",                                                            reversed: false, domain: "Connection" },
-      { text: "I feel that I belong to a team.",                                                                                       reversed: false, domain: "Connection"     },
-      { text: "I feel included on my team.",                                                                                           reversed: false,  domain: "Connection"    },
-      { text: "I have autonomy in my work environment.",                                                                               reversed: false,  domain: "Harmony"    },
-      { text: "I am able to take paid leave.",                                                                                         reversed: false,  domain: "Harmony"    },
-      { text: "My colleagues respect my boundaries between work and non-work time.",                                                   reversed: false,  domain: "Harmony"    },
-      { text: "I can develop my own work schedule.",                                                                                   reversed: false,  domain: "Harmony"    },
-      { text: "I can make my work schedule as flexible and predictable as possible.",                                                  reversed: false,  domain: "Harmony"    },
-      { text: "I earn a living wage (i.e., a wage that is high enough to maintain a normal standard of living).",                      reversed: false,  domain: "Mattering"    },
-      { text: "I am involved in workplace-related decisions.",                                                                         reversed: false,  domain: "Mattering"    },
-      { text: "I feel connected to the organization’s mission.",                                                                       reversed: false,  domain: "Mattering"    },
-      { text: "My contribution is acknowledged and rewarded from time to time.",                                                       reversed: false,  domain: "Mattering"    },
-      { text: "I receive sufficient opportunities for training, education, and mentoring.",                                            reversed: false,  domain: "Growth"    },
-      { text: "I regularly receive appropriate feedback on my work.",                                                                  reversed: false,  domain: "Growth"    },
-      { text: "I have clear and equitable pathways for career advancement.",                                                           reversed: false,  domain: "Growth"    }
+      { text: "I feel safe from any physical harm.",                                                                                   reversed: false, domain: "protection"  },
+      { text: "I am familiar with the policies and programs to ensure fair treatment and to appreciate different perspectives.",       reversed: false, domain: "protection"     },
+      { text: "I feel safe from psychological harm.",                                                                                  reversed: false, domain: "protection" },
+      { text: "I can talk freely about mental health issues.",                                                                         reversed: false,  domain: "protection" },
+      { text: "I can get support for mental health issues.",                                                                           reversed: false, domain: "protection"    },
+      { text: "I am able to get adequate rest.",                                                                                       reversed: false, domain: "protection"  },
+      { text: "I am able to collaborate with others and work in a team.",                                                              reversed: false,  domain: "connection" },
+      { text: "I am able to create trusted relationships with colleagues.",                                                            reversed: false, domain: "connection" },
+      { text: "I feel that I belong to a team.",                                                                                       reversed: false, domain: "connection"     },
+      { text: "I feel included on my team.",                                                                                           reversed: false,  domain: "connection"    },
+      { text: "I have autonomy in my work environment.",                                                                               reversed: false,  domain: "harmony"    },
+      { text: "I am able to take paid leave.",                                                                                         reversed: false,  domain: "harmony"    },
+      { text: "My colleagues respect my boundaries between work and non-work time.",                                                   reversed: false,  domain: "harmony"    },
+      { text: "I can develop my own work schedule.",                                                                                   reversed: false,  domain: "harmony"    },
+      { text: "I can make my work schedule as flexible and predictable as possible.",                                                  reversed: false,  domain: "harmony"    },
+      { text: "I earn a living wage (i.e., a wage that is high enough to maintain a normal standard of living).",                      reversed: false,  domain: "mattering"    },
+      { text: "I am involved in workplace-related decisions.",                                                                         reversed: false,  domain: "mattering"    },
+      { text: "I feel connected to the organization’s mission.",                                                                       reversed: false,  domain: "mattering"    },
+      { text: "My contribution is acknowledged and rewarded from time to time.",                                                       reversed: false,  domain: "mattering"    },
+      { text: "I receive sufficient opportunities for training, education, and mentoring.",                                            reversed: false,  domain: "growth"    },
+      { text: "I regularly receive appropriate feedback on my work.",                                                                  reversed: false,  domain: "growth"    },
+      { text: "I have clear and equitable pathways for career advancement.",                                                           reversed: false,  domain: "growth"    }
       /* Add more items here as needed. */
     ],
 
