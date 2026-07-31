@@ -603,18 +603,39 @@ section.block.tight { padding: 64px 0; }
 }
 .quiz-nav .btn-outline { background: transparent; }
 
-/* Grouped (multi-item) quiz step */
-.group-items { display: flex; flex-direction: column; gap: 28px; margin-top: 12px; }
-.group-item { padding: 22px 0 4px; border-top: 1px solid var(--line); }
+/* Grouped (multi-item) quiz step — inline number + text, matching fonts */
+.group-items { display: flex; flex-direction: column; gap: 26px; margin-top: 12px; }
+.group-item { padding: 20px 0 4px; border-top: 1px solid var(--line); }
 .group-item:first-child { border-top: 0; padding-top: 4px; }
-.gi-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
-.gi-num {
-  flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
-  background: var(--ivory-deep); color: var(--teal-500);
-  font-family: "Fraunces", serif; font-weight: 700; font-size: .95rem;
-  display: grid; place-items: center; margin-top: 2px;
+.gi-text {
+  margin: 0 0 14px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ink);
+  font-weight: 500;
 }
-.gi-text { margin: 0; font-size: 1.05rem; line-height: 1.5; color: var(--ink); font-weight: 500; }
+.gi-num {
+  font-weight: 700;
+  color: var(--teal-500);
+  margin-right: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Do-not-print / do-not-copy notice on assessment page */
+.assessment-notice {
+  text-align: center;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  margin: 28px auto 0;
+  padding: 12px 20px;
+  border: 1px dashed var(--coral);
+  border-radius: 12px;
+  max-width: 560px;
+  font-weight: 500;
+  letter-spacing: .01em;
+  background: rgba(255,107,82,.04);
+}
 
 /* Result screen */
 .result-hero { text-align: center; padding: 20px 0; }

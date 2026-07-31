@@ -92,6 +92,8 @@
         </div>
 
       </div>
+
+      <p class="assessment-notice">🔒 Do not print, store, or copy this page.</p>
     </div>
   </section>
 
@@ -269,10 +271,7 @@
       const item = AUGUSTA_CONFIG.items[i];
       itemsHtml.push(`
         <div class="group-item" data-item-idx="${i}">
-          <div class="gi-header">
-            <span class="gi-num">${i + 1}</span>
-            <p class="gi-text">${item.text}</p>
-          </div>
+          <p class="gi-text"><span class="gi-num">${i + 1}.</span> ${item.text}</p>
           <div class="likert-row" data-idx="${i}">
             ${AUGUSTA_CONFIG.scale.labels.map((lbl, k) => `
               <label class="likert-opt" data-value="${k + AUGUSTA_CONFIG.scale.min}">
@@ -287,7 +286,6 @@
     }
 
     step.innerHTML = `
-      ${group.title ? `<h2>${group.title}</h2>` : ''}
       <p class="q-hint">${group.hint || 'Please answer every item in this section — select the option that most reflects your experience over the past two weeks.'}</p>
       <div class="group-items">${itemsHtml.join('')}</div>
       <div class="quiz-nav">
