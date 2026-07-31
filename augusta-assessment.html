@@ -135,7 +135,7 @@
     scale: {
       min: 1,
       max: 5,
-      labels: ["Strongly Disagree", "Disagree", "Neutral", "Agree", "Strongly Agree"]
+      labels: ["Strongly disagree", "Somewhat disagree", "Neither agree nor disagree", "Somewhat agree", "Strongly agree"]
     },
 
     /* The five domains of the US Surgeon General's Framework.
@@ -152,33 +152,45 @@
        `reversed: true` items are automatically reverse-scored.
        Placeholder items — swap for the validated Augusta+ items. */
     items: [
-      { text: "I feel a sense of purpose and meaning in the work I do.",              reversed: false, domain: "mattering"  },
-      { text: "I have enough autonomy to make important decisions in my role.",       reversed: false, domain: "growth"     },
-      { text: "My workplace provides adequate support when I face difficult tasks.",  reversed: false, domain: "connection" },
-      { text: "I often feel emotionally drained by the end of the workday.",          reversed: true,  domain: "protection" },
-      { text: "I can maintain a healthy balance between my work and personal life.",  reversed: false, domain: "harmony"    },
-      { text: "I feel recognized and appreciated for my contributions.",              reversed: false, domain: "mattering"  },
-      { text: "I dread going to work most days.",                                     reversed: true,  domain: "protection" },
-      { text: "The people I work with are supportive and respectful.",                reversed: false, domain: "connection" },
-      { text: "I have opportunities to grow and develop in my role.",                 reversed: false, domain: "growth"     },
-      { text: "I feel physically exhausted because of my work.",                      reversed: true,  domain: "harmony"    }
+      { text: "I feel safe from any physical harm.",                                                                                   reversed: false, domain: "Protection from Harm"  },
+      { text: "I am familiar with the policies and programs to ensure fair treatment and to appreciate different perspectives.",       reversed: false, domain: "Protection from Harm"     },
+      { text: "I feel safe from psychological harm.",                                                                                  reversed: false, domain: "Protection from Harm" },
+      { text: "I can talk freely about mental health issues.",                                                                         reversed: true,  domain: "Protection from Harm" },
+      { text: "I can get support for mental health issues.",                                                                           reversed: false, domain: "Protection from Harm"    },
+      { text: "I am able to get adequate rest.",                                                                                       reversed: false, domain: "Protection from Harm"  },
+      { text: "I am able to collaborate with others and work in a team.",                                                              reversed: true,  domain: "Connection & Community" },
+      { text: "I am able to create trusted relationships with colleagues.",                                                            reversed: false, domain: "Connection & Community" },
+      { text: "I feel that I belong to a team.",                                                                                       reversed: false, domain: "Connection & Community"     },
+      { text: "I feel included on my team.",                                                                                           reversed: true,  domain: "Connection & Community"    },
+      { text: "I have autonomy in my work environment.",                                                                               reversed: true,  domain: "Work-Life Harmony"    },
+      { text: "I am able to take paid leave.",                                                                                         reversed: true,  domain: "Work-Life Harmony"    },
+      { text: "My colleagues respect my boundaries between work and non-work time.",                                                   reversed: true,  domain: "Work-Life Harmony"    },
+      { text: "I can develop my own work schedule.",                                                                                   reversed: true,  domain: "Work-Life Harmony"    },
+      { text: "I can make my work schedule as flexible and predictable as possible.",                                                  reversed: true,  domain: "Work-Life Harmony"    },
+      { text: "I earn a living wage (i.e., a wage that is high enough to maintain a normal standard of living).",                      reversed: true,  domain: "Mattering at Work"    },
+      { text: "I am involved in workplace-related decisions.",                                                                         reversed: true,  domain: "Mattering at Work"    },
+      { text: "I feel connected to the organization’s mission.",                                                                       reversed: true,  domain: "Mattering at Work"    },
+      { text: "My contribution is acknowledged and rewarded from time to time.",                                                       reversed: true,  domain: "Mattering at Work"    },
+      { text: "I receive sufficient opportunities for training, education, and mentoring.",                                            reversed: true,  domain: "Opportunity for Growth"    },
+      { text: "I regularly receive appropriate feedback on my work.",                                                                  reversed: true,  domain: "Opportunity for Growth"    },
+      { text: "I have clear and equitable pathways for career advancement.",                                                           reversed: true,  domain: "Opportunity for Growth"    }
       /* Add more items here as needed. */
     ],
 
     /* Icons are cosmetic; feel free to change or use text labels only. */
     professions: [
       { id: "physician",   label: "Physician",             icon: "🩺",
-        thresholds: { moderate: 30, high: 40 } },
+        thresholds: { low: 30, moderate: 80, high: 90 } },
       { id: "nurse",       label: "Nurse",                 icon: "💉",
-        thresholds: { moderate: 28, high: 38 } },
+        thresholds: { low: 30, moderate: 80, high: 90 } },
       { id: "public_health", label: "Public-Health Professional", icon: "🌍",
-        thresholds: { moderate: 30, high: 40 } },
+        thresholds: { low: 30, moderate: 80, high: 90 } },
       { id: "researcher",  label: "Academic Researcher",   icon: "🔬",
-        thresholds: { moderate: 32, high: 42 } },
+        thresholds: { low: 30, moderate: 80, high: 90 } },
       { id: "administrator", label: "Health Administrator", icon: "📋",
-        thresholds: { moderate: 30, high: 40 } },
+        thresholds: { low: 30, moderate: 80, high: 90 } },
       { id: "other",       label: "Other Profession",      icon: "👥",
-        thresholds: { moderate: 30, high: 40 } }
+        thresholds: { low: 30, moderate: 80, high: 90 } }
     ],
 
     /* Text shown after scoring. Free to reword. */
