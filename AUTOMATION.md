@@ -81,3 +81,5 @@ python scripts/fetch_scholar.py
 ```
 
 Then open `index.html` and `research.html` and confirm the numbers and pubs show up.
+
+<!-- git push pipeline verified: 2026-07-31 -->
