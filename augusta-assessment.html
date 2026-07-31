@@ -155,42 +155,42 @@
       { text: "I feel safe from any physical harm.",                                                                                   reversed: false, domain: "Protection"  },
       { text: "I am familiar with the policies and programs to ensure fair treatment and to appreciate different perspectives.",       reversed: false, domain: "Protection"     },
       { text: "I feel safe from psychological harm.",                                                                                  reversed: false, domain: "Protection" },
-      { text: "I can talk freely about mental health issues.",                                                                         reversed: true,  domain: "Protection" },
+      { text: "I can talk freely about mental health issues.",                                                                         reversed: false,  domain: "Protection" },
       { text: "I can get support for mental health issues.",                                                                           reversed: false, domain: "Protection"    },
       { text: "I am able to get adequate rest.",                                                                                       reversed: false, domain: "Protection"  },
-      { text: "I am able to collaborate with others and work in a team.",                                                              reversed: true,  domain: "Connection" },
+      { text: "I am able to collaborate with others and work in a team.",                                                              reversed: false,  domain: "Connection" },
       { text: "I am able to create trusted relationships with colleagues.",                                                            reversed: false, domain: "Connection" },
       { text: "I feel that I belong to a team.",                                                                                       reversed: false, domain: "Connection"     },
-      { text: "I feel included on my team.",                                                                                           reversed: true,  domain: "Connection"    },
-      { text: "I have autonomy in my work environment.",                                                                               reversed: true,  domain: "Harmony"    },
-      { text: "I am able to take paid leave.",                                                                                         reversed: true,  domain: "Harmony"    },
-      { text: "My colleagues respect my boundaries between work and non-work time.",                                                   reversed: true,  domain: "Harmony"    },
-      { text: "I can develop my own work schedule.",                                                                                   reversed: true,  domain: "Harmony"    },
-      { text: "I can make my work schedule as flexible and predictable as possible.",                                                  reversed: true,  domain: "Harmony"    },
-      { text: "I earn a living wage (i.e., a wage that is high enough to maintain a normal standard of living).",                      reversed: true,  domain: "Mattering"    },
-      { text: "I am involved in workplace-related decisions.",                                                                         reversed: true,  domain: "Mattering"    },
-      { text: "I feel connected to the organization’s mission.",                                                                       reversed: true,  domain: "Mattering"    },
-      { text: "My contribution is acknowledged and rewarded from time to time.",                                                       reversed: true,  domain: "Mattering"    },
-      { text: "I receive sufficient opportunities for training, education, and mentoring.",                                            reversed: true,  domain: "Growth"    },
-      { text: "I regularly receive appropriate feedback on my work.",                                                                  reversed: true,  domain: "Growth"    },
-      { text: "I have clear and equitable pathways for career advancement.",                                                           reversed: true,  domain: "Growth"    }
+      { text: "I feel included on my team.",                                                                                           reversed: false,  domain: "Connection"    },
+      { text: "I have autonomy in my work environment.",                                                                               reversed: false,  domain: "Harmony"    },
+      { text: "I am able to take paid leave.",                                                                                         reversed: false,  domain: "Harmony"    },
+      { text: "My colleagues respect my boundaries between work and non-work time.",                                                   reversed: false,  domain: "Harmony"    },
+      { text: "I can develop my own work schedule.",                                                                                   reversed: false,  domain: "Harmony"    },
+      { text: "I can make my work schedule as flexible and predictable as possible.",                                                  reversed: false,  domain: "Harmony"    },
+      { text: "I earn a living wage (i.e., a wage that is high enough to maintain a normal standard of living).",                      reversed: false,  domain: "Mattering"    },
+      { text: "I am involved in workplace-related decisions.",                                                                         reversed: false,  domain: "Mattering"    },
+      { text: "I feel connected to the organization’s mission.",                                                                       reversed: false,  domain: "Mattering"    },
+      { text: "My contribution is acknowledged and rewarded from time to time.",                                                       reversed: false,  domain: "Mattering"    },
+      { text: "I receive sufficient opportunities for training, education, and mentoring.",                                            reversed: false,  domain: "Growth"    },
+      { text: "I regularly receive appropriate feedback on my work.",                                                                  reversed: false,  domain: "Growth"    },
+      { text: "I have clear and equitable pathways for career advancement.",                                                           reversed: false,  domain: "Growth"    }
       /* Add more items here as needed. */
     ],
 
     /* Icons are cosmetic; feel free to change or use text labels only. */
     professions: [
       { id: "physician",   label: "Physician",             icon: "🩺",
-        thresholds: { low: 30, moderate: 80, high: 90 } },
+        thresholds: { low: 30, moderate: 51, high: 80 } },
       { id: "nurse",       label: "Nurse",                 icon: "💉",
-        thresholds: { low: 30, moderate: 80, high: 90 } },
+        thresholds: { low: 30, moderate: 51, high: 80 } },
       { id: "public_health", label: "Public-Health Professional", icon: "🌍",
-        thresholds: { low: 30, moderate: 80, high: 90 } },
+        thresholds: { low: 30, moderate: 51, high: 80 } },
       { id: "researcher",  label: "Academic Researcher",   icon: "🔬",
-        thresholds: { low: 30, moderate: 80, high: 90 } },
+        thresholds: { low: 30, moderate: 51, high: 80 } },
       { id: "administrator", label: "Health Administrator", icon: "📋",
-        thresholds: { low: 30, moderate: 80, high: 90 } },
+        thresholds: { low: 30, moderate: 51, high: 80 } },
       { id: "other",       label: "Other Profession",      icon: "👥",
-        thresholds: { low: 30, moderate: 80, high: 90 } }
+        thresholds: { low: 30, moderate: 51, high: 80 } }
     ],
 
     /* Text shown after scoring. Free to reword. */
@@ -317,57 +317,77 @@
   // ---------- Scoring ----------
   function finish() {
     const { min, max } = AUGUSTA_CONFIG.scale;
-    const scaled = v => (v == null ? min : v); // treat unanswered as min
 
-    // Total + per-domain accumulation in a single pass
+    // 1) Refuse to score if any item is unanswered — jump back to the first skip.
+    for (let i = 0; i < AUGUSTA_CONFIG.items.length; i++) {
+      if (state.answers[i] == null) {
+        alert('Please answer question ' + (i + 1) + ' before you see your score.');
+        goto(i + 1);
+        return;
+      }
+    }
+
+    // 2) Accumulate total + per-domain totals, tracking each domain's own min/max/count.
     let raw = 0;
-    const domainTotals = {};   // { domainId: {score, max} }
-    (AUGUSTA_CONFIG.domains || []).forEach(d => { domainTotals[d.id] = { score: 0, max: 0 }; });
+    const N = AUGUSTA_CONFIG.items.length;
+    const overallMin = N * min;
+    const overallMax = N * max;
+
+    const dt = {}; // { domainId: { score, min, max, count } }
+    (AUGUSTA_CONFIG.domains || []).forEach(d => {
+      dt[d.id] = { score: 0, min: 0, max: 0, count: 0 };
+    });
 
     AUGUSTA_CONFIG.items.forEach((item, i) => {
-      const v = scaled(state.answers[i]);
+      const v = state.answers[i];
       const contribution = item.reversed ? (min + max - v) : v;
       raw += contribution;
       const d = item.domain;
-      if (d && domainTotals[d]) {
-        domainTotals[d].score += contribution;
-        domainTotals[d].max   += max;
+      if (d && dt[d]) {
+        dt[d].score += contribution;
+        dt[d].min   += min;
+        dt[d].max   += max;
+        dt[d].count += 1;
       }
     });
 
-    const maxScore = AUGUSTA_CONFIG.items.length * max;
-
-    // Overall tier from profession thresholds
+    // 3) Overall tier — profession-specific thresholds (raw score cutoffs).
     const prof = AUGUSTA_CONFIG.professions.find(p => p.id === state.profession)
               || AUGUSTA_CONFIG.professions[0];
-    const t = prof.thresholds;
+    const tspec = prof.thresholds;
     let tier, tierClass, interpKey;
-    if (raw < t.moderate)  { interpKey = 'low';      tierClass = 'tier-low';  tier = 'LOW · ' + prof.label; }
-    else if (raw < t.high) { interpKey = 'moderate'; tierClass = 'tier-mod';  tier = 'MODERATE · ' + prof.label; }
-    else                   { interpKey = 'high';     tierClass = 'tier-high'; tier = 'HIGH · ' + prof.label; }
+    if (raw < tspec.moderate)  { interpKey = 'low';      tierClass = 'tier-low';  tier = 'LOW · ' + prof.label; }
+    else if (raw < tspec.high) { interpKey = 'moderate'; tierClass = 'tier-mod';  tier = 'MODERATE · ' + prof.label; }
+    else                       { interpKey = 'high';     tierClass = 'tier-high'; tier = 'HIGH · ' + prof.label; }
     const interp = AUGUSTA_CONFIG.interpretations[interpKey];
 
-    document.getElementById('resScore').textContent = raw + ' / ' + maxScore;
+    // 4) Overall display — show raw score against the true (min → max) range.
+    document.getElementById('resScore').textContent = raw + ' / ' + overallMax;
     const tierEl = document.getElementById('resTier');
     tierEl.textContent = tier; tierEl.className = 'result-tier ' + tierClass;
     document.getElementById('resTitle').textContent = interp.title;
     document.getElementById('resBody').innerHTML = interp.body;
 
-    const pct = Math.max(2, Math.min(98, Math.round((raw / maxScore) * 100)));
-    document.getElementById('resMarker').style.left = pct + '%';
+    // 5) Marker position = % along the (min → max) range, not (0 → max).
+    //    Answering the minimum on every item now sits at the left edge, not at 20%.
+    const overallRange = overallMax - overallMin;
+    const pctOfRange = overallRange === 0 ? 0 : ((raw - overallMin) / overallRange) * 100;
+    document.getElementById('resMarker').style.left =
+      Math.max(2, Math.min(98, Math.round(pctOfRange))) + '%';
 
-    // Render per-domain bars
+    // 6) Per-domain bars — each domain has its own min/max because item counts differ.
     const rows = (AUGUSTA_CONFIG.domains || []).map(d => {
-      const t = domainTotals[d.id];
-      if (!t || t.max === 0) return '';
-      const pct = Math.round((t.score / t.max) * 100);
+      const s = dt[d.id];
+      if (!s || s.count === 0) return '';
+      const range = s.max - s.min;
+      const domainPct = range === 0 ? 0 : Math.round(((s.score - s.min) / range) * 100);
       return `
         <div class="ds-row">
           <div class="ds-meta">
-            <span class="ds-name">${d.label}</span>
-            <span class="ds-value">${t.score} / ${t.max} · ${pct}%</span>
+            <span class="ds-name">${d.label} <span style="color:var(--ink-soft);font-weight:400">· ${s.count} item${s.count === 1 ? '' : 's'}</span></span>
+            <span class="ds-value">${s.score} / ${s.max} <span style="opacity:.55">(min ${s.min})</span> · ${domainPct}%</span>
           </div>
-          <div class="ds-track"><div class="ds-fill ds-color-${d.id}" style="width:${pct}%"></div></div>
+          <div class="ds-track"><div class="ds-fill ds-color-${d.id}" style="width:${domainPct}%"></div></div>
         </div>`;
     }).join('');
     document.getElementById('domainRows').innerHTML = rows;
