@@ -9,7 +9,15 @@
 
   // ---------- Scholar metrics strip (home page) ----------
   if (document.getElementById('scholar-strip')) {
-    fetch('data/metrics.json' + CACHE_BUST).then(r => r.json()).then(m => {
+    Promise.all([
+      fetch('data/metrics.json' + CACHE_BUST).then(r => r.json()),
+      // Also fetch publications.json so we can derive an accurate publication count
+      // from ORCID (Scholar's `publications` field is often 0 due to a scholarly-lib quirk).
+      fetch('data/publications.json' + CACHE_BUST).then(r => r.json()).catch(() => ({ publications: [] }))
+    ]).then(([m, pubsData]) => {
+      const pubs = Array.isArray(pubsData) ? pubsData : (pubsData.publications || []);
+      if (pubs.length) m.publications = pubs.length;   // ORCID beats Scholar for pub counts
+
       document.querySelectorAll('[data-metric]').forEach(el => {
         const key = el.dataset.metric;
         if (m[key] != null) el.textContent = m[key].toLocaleString();
