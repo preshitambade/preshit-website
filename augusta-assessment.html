@@ -192,6 +192,17 @@
       { id: "other",       label: "Other Profession",      icon: "👥",
         thresholds: { low: 30, moderate: 51, high: 80 } }
     ],
+    
+    /* Groups the items into multi-question steps. The `count` values must sum
+       to items.length. Each group renders on its own screen with an optional
+       title and hint. Remove this block to fall back to one-item-per-step. */
+    groups: [
+      { title: "Protection from Harm",       count: 6 },
+      { title: "Connection & Community",     count: 4 },
+      { title: "Work-Life Harmony",          count: 5 },
+      { title: "Mattering at Work",          count: 4 },
+      { title: "Opportunity for Growth",     count: 3 }
+    ],
 
     /* Text shown after scoring. Free to reword. */
     interpretations: {
@@ -211,11 +222,16 @@
   };
   /* =================== END CONFIG =================== */
 
+    // Normalize: if no `groups` defined, treat each item as its own group (one-per-step).
+  const GROUPS = (AUGUSTA_CONFIG.groups && AUGUSTA_CONFIG.groups.length)
+    ? AUGUSTA_CONFIG.groups
+    : AUGUSTA_CONFIG.items.map(() => ({ count: 1 }));
+
   const state = {
     profession: null,
     answers: {},
-    currentStep: 0,     // 0 = profession picker, 1..N = items, N+1 = result
-    totalSteps: 1 + AUGUSTA_CONFIG.items.length
+    currentStep: 0,     // 0 = profession picker, 1..G = group steps, G+1 = result
+    totalSteps: 1 + GROUPS.length
   };
 
   // ---------- Build profession picker ----------
@@ -234,43 +250,76 @@
     profGrid.appendChild(el);
   });
 
-  // ---------- Build item steps ----------
+  // ---------- Build group steps (each step contains N items from one group) ----------
   const itemSteps = document.getElementById('itemSteps');
-  AUGUSTA_CONFIG.items.forEach((item, i) => {
-    const stepIdx = i + 1;
+  let itemCursor = 0;
+  GROUPS.forEach((group, g) => {
+    const stepIdx    = g + 1;
+    const groupStart = itemCursor;
+    const groupEnd   = itemCursor + group.count;   // exclusive
+    const isLast     = g === GROUPS.length - 1;
+    itemCursor       = groupEnd;
+
     const step = document.createElement('div');
-    step.className = 'quiz-step';
+    step.className    = 'quiz-step';
     step.dataset.step = String(stepIdx);
+
+    const itemsHtml = [];
+    for (let i = groupStart; i < groupEnd && i < AUGUSTA_CONFIG.items.length; i++) {
+      const item = AUGUSTA_CONFIG.items[i];
+      itemsHtml.push(`
+        <div class="group-item" data-item-idx="${i}">
+          <div class="gi-header">
+            <span class="gi-num">${i + 1}</span>
+            <p class="gi-text">${item.text}</p>
+          </div>
+          <div class="likert-row" data-idx="${i}">
+            ${AUGUSTA_CONFIG.scale.labels.map((lbl, k) => `
+              <label class="likert-opt" data-value="${k + AUGUSTA_CONFIG.scale.min}">
+                <div class="dot-num">${k + AUGUSTA_CONFIG.scale.min}</div>
+                <span>${lbl}</span>
+                <input type="radio" name="q${i}" value="${k + AUGUSTA_CONFIG.scale.min}" class="likert-input" />
+              </label>
+            `).join('')}
+          </div>
+        </div>
+      `);
+    }
+
     step.innerHTML = `
-      <h2>${item.text}</h2>
-      <p class="q-hint">Select the option that most reflects your experience over the past two weeks.</p>
-      <div class="likert-row" data-idx="${i}">
-        ${AUGUSTA_CONFIG.scale.labels.map((lbl, k) => `
-          <label class="likert-opt" data-value="${k + AUGUSTA_CONFIG.scale.min}">
-            <div class="dot-num">${k + AUGUSTA_CONFIG.scale.min}</div>
-            <span>${lbl}</span>
-            <input type="radio" name="q${i}" value="${k + AUGUSTA_CONFIG.scale.min}" class="likert-input" />
-          </label>
-        `).join('')}
-      </div>
+      ${group.title ? `<h2>${group.title}</h2>` : ''}
+      <p class="q-hint">${group.hint || 'Please answer every item in this section — select the option that most reflects your experience over the past two weeks.'}</p>
+      <div class="group-items">${itemsHtml.join('')}</div>
       <div class="quiz-nav">
         <button class="btn btn-outline back-btn">← Back</button>
-        <button class="btn btn-primary next-btn" disabled>${i === AUGUSTA_CONFIG.items.length - 1 ? 'See my score →' : 'Next →'}</button>
+        <button class="btn btn-primary next-btn" disabled>${isLast ? 'See my score →' : 'Next →'}</button>
       </div>`;
     itemSteps.appendChild(step);
 
-    // wire up Likert selection
-    step.querySelectorAll('.likert-opt').forEach(opt => {
-      opt.addEventListener('click', (e) => {
-        e.preventDefault();
-        step.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
-        state.answers[i] = Number(opt.dataset.value);
-        step.querySelector('.next-btn').disabled = false;
+    const nextBtn = step.querySelector('.next-btn');
+    const checkComplete = () => {
+      for (let i = groupStart; i < groupEnd; i++) {
+        if (state.answers[i] == null) { nextBtn.disabled = true; return; }
+      }
+      nextBtn.disabled = false;
+    };
+
+    // wire Likert selection scoped per item block
+    step.querySelectorAll('.group-item').forEach(itemBlock => {
+      const idx = Number(itemBlock.dataset.itemIdx);
+      itemBlock.querySelectorAll('.likert-opt').forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          e.preventDefault();
+          itemBlock.querySelectorAll('.likert-opt').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          state.answers[idx] = Number(opt.dataset.value);
+          checkComplete();
+          updateProgress(state.currentStep);
+        });
       });
     });
 
-    step.querySelector('.next-btn').addEventListener('click', () => goto(state.currentStep + 1));
+    nextBtn.addEventListener('click', () => goto(state.currentStep + 1));
     step.querySelector('.back-btn').addEventListener('click', () => goto(state.currentStep - 1));
   });
 
@@ -288,7 +337,7 @@
   // ---------- Navigation & progress ----------
   function goto(step) {
     document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
-    if (step > AUGUSTA_CONFIG.items.length) {
+    if (step > GROUPS.length) {
       finish();
       document.querySelector('[data-step="result"]').classList.add('active');
       updateProgress(state.totalSteps);
@@ -302,14 +351,16 @@
   function updateProgress(step) {
     const pct = Math.min(100, Math.round((step / state.totalSteps) * 100));
     document.getElementById('pfill').style.width = pct + '%';
+    const answered = Object.keys(state.answers).length;
+    const totalItems = AUGUSTA_CONFIG.items.length;
     if (step === 0) {
       document.getElementById('pmeta').textContent = 'Getting started';
       document.getElementById('pcount').textContent = '';
-    } else if (step > AUGUSTA_CONFIG.items.length) {
+    } else if (step > GROUPS.length) {
       document.getElementById('pmeta').textContent = 'Complete';
       document.getElementById('pcount').textContent = '100%';
     } else {
-      document.getElementById('pmeta').textContent = `Question ${step} of ${AUGUSTA_CONFIG.items.length}`;
+      document.getElementById('pmeta').textContent = `Section ${step} of ${GROUPS.length} · ${answered}/${totalItems} answered`;
       document.getElementById('pcount').textContent = pct + '%';
     }
   }
