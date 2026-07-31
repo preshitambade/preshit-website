@@ -1,29 +1,189 @@
 {
-  "updated": "2026-07-29",
-  "source": "seed — replaced by ORCID sync on first workflow run",
+  "updated": "2026-07-31",
+  "source": "ORCID 0000-0002-6919-7206",
   "publications": [
     {
-      "authors": "MacKinnon, N. J., Emery, V., Waller, J., Ange, B., Ambade, P., Gunja, M., & Watson, E.",
-      "year": 2023,
-      "title": "Mapping Health Disparities in 11 High-Income Nations",
-      "venue": "JAMA Network Open, 6(7), e2322310",
-      "doi": "10.1001/jamanetworkopen.2023.22310",
-      "url": ""
+      "authors": "Preshit N. Ambade, Caleb Zimmerman, Christya Haddad, Camryn Koperski, Ghulam Rashid, Ahmad Kafri, Fuad Yazdani, Rebecca Hill Renirie, Delicia Pruitt, Neil J MacKinnon",
+      "year": 2026,
+      "title": "Updating knowledge on existing approaches on advanced care planning interventions: An umbrella review",
+      "venue": "Archives of Gerontology and Geriatrics",
+      "doi": "10.1016/j.archger.2026.106255",
+      "url": "https://doi.org/10.1016/j.archger.2026.106255"
     },
     {
-      "authors": "Ambade, P., Pakhale, S., & Rahman, T.",
-      "year": 2022,
-      "title": "Explaining Caste-Based Disparities in Enrollment for National Health Insurance Program in India: A Decomposition Analysis",
+      "authors": "Heather Naylor, Wooje Choi, Michael LeBlanc, Sheri Andrews, Preshit Ambade, Breagh MacKinnon, Neil MacKinnon",
+      "year": 2026,
+      "title": "Leadership and Managerial Development Needs of Pharmacy Leaders in Canadian Health Care Systems: Results from a National Questionnaire",
+      "venue": "Canadian Journal of Hospital Pharmacy",
+      "doi": "10.4212/cjhp.3836",
+      "url": "https://doi.org/10.4212/cjhp.3836"
+    },
+    {
+      "authors": "Heather Naylor, Wooje Choi, Michael LeBlanc, Sheri Andrews, Preshit Ambade, Neil MacKinnon",
+      "year": 2026,
+      "title": "Perspectives on Leadership Development and Learning Needs of Pharmacy Leaders in Canadian Health Care Systems: A Qualitative Study",
+      "venue": "Canadian Journal of Hospital Pharmacy",
+      "doi": "10.4212/cjhp.3837",
+      "url": "https://doi.org/10.4212/cjhp.3837"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Zach Hoffman, Minseo Yi, Neil J MacKinnon",
+      "year": 2025,
+      "title": "A national survey of health professional student preceptors\u2019 workplace mental health and well-being",
+      "venue": "Electronic Journal of General Medicine",
+      "doi": "10.29333/ejgm/16746",
+      "url": "https://doi.org/10.29333/ejgm/16746"
+    },
+    {
+      "authors": "Santiago Escobar, Neil J. MacKinnon, Preshit Ambade, Zach Hoffman, Diego F. Cuadros",
+      "year": 2025,
+      "title": "Spatiotemporal analysis of substance use disorder mortality in the United States: an observational study of emerging hotspots and vulnerable populations (2005\u20132020)",
+      "venue": "The Lancet Regional Health - Americas",
+      "doi": "10.1016/j.lana.2025.101075",
+      "url": "https://doi.org/10.1016/j.lana.2025.101075"
+    },
+    {
+      "authors": "Preshit N. Ambade, Zachary Hoffman, Kaamya Mehra, Munira Gunja, Justin X. Moore",
+      "year": 2025,
+      "title": "The Link Between Perceived Racism and Health Services Utilization Among Older Adults",
+      "venue": "Medical Care",
+      "doi": "10.1097/MLR.0000000000002134",
+      "url": "https://doi.org/10.1097/MLR.0000000000002134"
+    },
+    {
+      "authors": "Joanne Joseph, Fatmah Alhabeeb, Preshit Ambade, Bruna Falavinha, Sadia Jama, Sarah Yang, Ryan Chow, Risa Shorr, Eman Mugamai, Smita Pakhale",
+      "year": 2025,
+      "title": "A global overview of SCD: populations, policy limitations, and urgent need for comprehensive SCD clinical care, a systematic review",
+      "venue": "Journal of Sickle Cell Disease",
+      "doi": "10.1093/jscdis/yoaf026",
+      "url": "https://doi.org/10.1093/jscdis/yoaf026"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Zach Hoffman, Tyler Vest, Kaamya Mehra, Munira Gunja, Breagh H MacKinnon, Neil J MacKinnon",
+      "year": 2025,
+      "title": "Factors influencing communication issues during hospital discharge for older adults in 11 high-income countries: a secondary analysis of the 2021 International Health Policy Survey",
+      "venue": "BMJ Open",
+      "doi": "10.1136/bmjopen-2024-089430",
+      "url": "https://doi.org/10.1136/bmjopen-2024-089430"
+    },
+    {
+      "authors": "Preshit N. Ambade, Zachary T. Hoffman, Kaamya Mehra, Neil J. MacKinnon",
+      "year": 2024,
+      "title": "Predictors of advance care planning in 11 high\u2010income nations",
+      "venue": "Journal of the American Geriatrics Society",
+      "doi": "10.1111/jgs.19226",
+      "url": "https://doi.org/10.1111/jgs.19226"
+    },
+    {
+      "authors": "Neil J. MacKinnon, Melissa Powell-Williams, Preshit Nemdas Ambade, Vanessa Emery, Puja Punukollu, Merry Chen",
+      "year": 2024,
+      "title": "Motivators and mechanisms for an international rural health collaboration",
+      "venue": "Scientific Reports",
+      "doi": "10.1038/s41598-024-70389-4",
+      "url": "https://doi.org/10.1038/s41598-024-70389-4"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Anushka Ataullahjan, Julia Hajjar, Nicholas Kofi Adjei, Sanni Yaya",
+      "year": 2024,
+      "title": "Using the Family Planning Estimation Tool (FPET) to assess national-level family planning trends and future projections for contraceptive prevalence and associated demand for HIV-infected women in sub-Saharan Africa",
+      "venue": "PLOS Global Public Health",
+      "doi": "10.1371/journal.pgph.0002637",
+      "url": "https://doi.org/10.1371/journal.pgph.0002637"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Smita Pakhale, Tauhidur Rahman",
+      "year": 2023,
+      "title": "Explaining Caste-Based Disparities in Enrollment for National Health Insurance Program in India: a Decomposition Analysis",
       "venue": "Journal of Racial and Ethnic Health Disparities",
       "doi": "10.1007/s40615-022-01374-8",
+      "url": "https://doi.org/10.1007/s40615-022-01374-8"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Kednapa Thavorn, Smita Pakhale",
+      "year": 2023,
+      "title": "COVID-19 Pandemic: Did Strict Mobility Restrictions Save Lives and Healthcare Costs in Maharashtra, India?",
+      "venue": "Healthcare",
+      "doi": "10.3390/healthcare11142112",
+      "url": "https://doi.org/10.3390/healthcare11142112"
+    },
+    {
+      "authors": "Neil J. MacKinnon, Vanessa Emery, Jennifer Waller, Brittany Ange, Preshit Ambade, Munira Gunja, Emma Watson",
+      "year": 2023,
+      "title": "Mapping Health Disparities in 11 High-Income Nations",
+      "venue": "JAMA Network Open",
+      "doi": "10.1001/jamanetworkopen.2023.22310",
+      "url": "https://doi.org/10.1001/jamanetworkopen.2023.22310"
+    },
+    {
+      "authors": "Preshit Nemdas Ambade, Joe Gerald, Tauhidur Rahman",
+      "year": 2023,
+      "title": "Wealth Status and Health Insurance Enrollment in India: An Empirical Analysis",
+      "venue": "Healthcare",
+      "doi": "10.3390/healthcare11091343",
+      "url": "https://doi.org/10.3390/healthcare11091343"
+    },
+    {
+      "authors": "",
+      "year": 2022,
+      "title": "Personalised multicomponent interventions for tobacco dependence management in low socioeconomic populations: a systematic review and meta-analysis",
+      "venue": "Journal of Epidemiology and Community Health",
+      "doi": "10.1136/jech-2021-216783",
+      "url": "https://doi.org/10.1136/jech-2021-216783"
+    },
+    {
+      "authors": "",
+      "year": 2022,
+      "title": "SARS-CoV-2 RT-PCR positivity in relation to clinical and demographic characteristics in residents of border quarantine centres, Khyber Pakhtunkhwa, Pakistan: a prospective cohort study",
+      "venue": "Transactions of The Royal Society of Tropical Medicine and Hygiene",
+      "doi": "10.1093/trstmh/trac057",
+      "url": "https://doi.org/10.1093/trstmh/trac057"
+    },
+    {
+      "authors": "",
+      "year": 2022,
+      "title": "Corporatizing american health care: How we lost our health care system\u00a0Robert\u00a0Derlet\u00a0Baltimore, MD, John Hopkins University Press, 2021c. $29.95. Paperback pp. 216. ISBN: 9781421439587",
+      "venue": "World Medical &amp; Health Policy",
+      "doi": "10.1002/wmh3.511",
+      "url": "https://doi.org/10.1002/wmh3.511"
+    },
+    {
+      "authors": "Preshit Ambade, Tauhidur Rahman",
+      "year": 2022,
+      "title": "Do National Health Insurance Programs for the Poor Improve the Relative Health Outcomes of the Poor? Evidence from India",
+      "venue": "SSRN Electronic Journal",
+      "doi": "10.2139/ssrn.4228939",
+      "url": "https://doi.org/10.2139/ssrn.4228939"
+    },
+    {
+      "authors": "",
+      "year": 2021,
+      "title": "COVID\u201019 situation in Pakistan: A broad overview",
+      "venue": "Respirology",
+      "doi": "10.1111/resp.14093",
+      "url": "https://doi.org/10.1111/resp.14093"
+    },
+    {
+      "authors": "",
+      "year": 2020,
+      "title": "Insight 7 Gurukul of Skill in Dongargaon, Chhattisgarh",
+      "venue": "Making Development Happen: Transformational Change in Rural India",
+      "doi": "",
+      "url": "https://www.orientblackswan.com/details?id=9789352879311"
+    },
+    {
+      "authors": "Ambade, P.N., Katragadda, C., Sun, D., Bootman, J.L., Abraham, I.",
+      "year": 2019,
+      "title": "Why health policies should be transnational: A case for East Asia Pacific countries",
+      "venue": "International Journal of Risk and Safety in Medicine",
+      "doi": "10.3233/JRS-199001",
       "url": ""
     },
     {
-      "authors": "Imran, M., Uddin, A., Ambade, P. N., et al.",
-      "year": 2022,
-      "title": "SARS-CoV-2 RT-PCR positivity in relation to demographic characteristics and symptoms in COVID-19 patients, Khyber Pakhtunkhwa, Pakistan: A prospective cohort study",
-      "venue": "Tropical Medicine & International Health, 116(8), 750–757",
-      "doi": "10.1093/trstmh/trac057",
+      "authors": "",
+      "year": 2018,
+      "title": "The castelessness of India\u2019s health policy",
+      "venue": "Roundtableindia",
+      "doi": "",
       "url": ""
     }
   ]
