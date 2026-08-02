@@ -41,37 +41,41 @@
       <div class="contact-grid">
         <div class="reveal contact-info">
           <div class="contact-line">
-            <div class="ci">🏛️</div>
-            <div>
-              <h3>Institution</h3>
-              <p>Covenant HealthCare College of Medicine<br />
-              <em>&amp;</em> Herbert H. and Grace A. Dow College of Health Professions<br />
-              <strong>Central Michigan University</strong></p>
-            </div>
-          </div>
-          <div class="contact-line">
-            <div class="ci">📍</div>
-            <div><h3>Office</h3><p>Foust 007 · 600 East Preston Street<br />Mount Pleasant, Michigan (MI) 48859</p></div>
-          </div>
-          <div class="contact-line">
-            <div class="ci">📧</div>
-            <div><h3>Email</h3><a href="mailto:preshitambade@gmail.com">preshitambade@gmail.com</a></div>
-          </div>
-          <div class="contact-line">
             <div class="ci">🏫</div>
             <div><h3>CMU Faculty Profile</h3><a href="https://www.cmich.edu/people/PRESHIT-AMBADE" target="_blank" rel="noopener">cmich.edu/people/PRESHIT-AMBADE →</a></div>
           </div>
           <div class="contact-line">
             <div class="ci">🎓</div>
-            <div><h3>Scholar</h3><a href="https://scholar.google.com/citations?user=YOUR_SCHOLAR_ID" target="_blank" rel="noopener">Google Scholar profile →</a></div>
+            <div><h3>Google Scholar</h3><a href="https://scholar.google.com/citations?user=KSbxiGAAAAAJ" target="_blank" rel="noopener">Google Scholar profile →</a></div>
           </div>
           <div class="contact-line">
             <div class="ci">💼</div>
-            <div><h3>LinkedIn</h3><a href="https://www.linkedin.com/" target="_blank" rel="noopener">Connect on LinkedIn →</a></div>
+            <div><h3>LinkedIn</h3><a href="https://www.linkedin.com/in/preshitambade/" target="_blank" rel="noopener">Connect on LinkedIn →</a></div>
           </div>
         </div>
 
-        <form class="form-card reveal" onsubmit="handleContact(event)">
+        <!--
+          Contact form — powered by Formsubmit.co (free, no signup, unlimited)
+          Delivery target is set in the action attribute below. First submission triggers
+          a one-time activation email to that address; click the confirmation link in it
+          and every subsequent message lands in the inbox directly.
+
+          To hide the email from the page's HTML source (nicer for privacy):
+            1) Go to https://formsubmit.co
+            2) Enter preshitambade@gmail.com; you'll be redirected to a page showing
+               a hashed URL like https://formsubmit.co/el/xxxxxxxx
+            3) Replace the `action=` URL below with that hashed URL and remove the email.
+        -->
+        <form class="form-card reveal"
+              action="https://formsubmit.co/preshitambade@gmail.com"
+              method="POST">
+          <input type="hidden" name="_subject" value="New message from preshitambade.com">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://preshitambade.github.io/preshit-website/contact.html?sent=1">
+          <!-- honeypot: bots often fill this hidden field; real users don't -->
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
           <div class="field">
             <label for="name">Your name</label>
             <input type="text" id="name" name="name" required />
@@ -113,17 +117,19 @@
 
   <script src="main.js"></script>
   <script>
-    // The form opens the user's email client with a pre-filled message.
-    // For a real backend, connect this to Formspree (https://formspree.io) or Netlify Forms — both free.
-    function handleContact(e) {
-      e.preventDefault();
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const subject = document.getElementById('subject').value || 'Website inquiry';
-      const message = document.getElementById('message').value;
-      const body = `From: ${name} <${email}>%0D%0A%0D%0A${encodeURIComponent(message)}`;
-      window.location.href = `mailto:preshitambade@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-      document.getElementById('form-status').textContent = 'Opening your email client…';
+    // Show a success confirmation when Formsubmit sends the visitor back with ?sent=1
+    if (new URLSearchParams(location.search).get('sent') === '1') {
+      const s = document.getElementById('form-status');
+      if (s) {
+        s.textContent = '✅ Thanks — your message was sent. I’ll get back to you as soon as I can.';
+        s.style.color = 'var(--teal-500)';
+        s.style.fontWeight = '600';
+      }
+      // hide the form itself so the visitor sees the confirmation clearly
+      const form = document.querySelector('.form-card');
+      if (form) {
+        form.querySelectorAll('.field, button[type="submit"]').forEach(el => el.style.display = 'none');
+      }
     }
   </script>
 </body>
