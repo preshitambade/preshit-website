@@ -1,9 +1,13 @@
 {
-  "updated": "2026-07-29",
+  "updated": "2026-08-02",
   "_note": "Edit this file every few months as you present. Just add a new entry at the top — the site picks it up automatically.",
   "conferences": [
     {
-      "year": 2023,
+      "year": 2026,
+      "name": "National Academies of Practice Annual Meeting & Forum"
+    },
+    {
+      "year": 2025,
       "name": "American Public Health Association Annual Meeting & Conference"
     },
     {
