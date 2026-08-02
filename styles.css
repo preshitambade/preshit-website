@@ -133,7 +133,13 @@ header.nav.scrolled .burger span { background: var(--ink); }
   padding: 0; box-shadow: var(--shadow); transform: rotate(-2deg);
   background: #0d3b34;
 }
-.hero-photo .frame img { width: 100%; height: 100%; object-fit: cover; border-radius: 24px; display: block; }
+.hero-photo .frame img {
+  width: 106%; height: 106%;
+  margin-left: -3%; margin-top: -3%;
+  object-fit: cover; object-position: center;
+  border-radius: 24px; display: block;
+  border: 0; outline: 0;
+}
 .hero-photo .badge {
   position: absolute; bottom: -18px; left: -26px; background: #fff; color: var(--ink);
   border-radius: 16px; padding: 12px 16px; box-shadow: var(--shadow); transform: rotate(-2deg);
