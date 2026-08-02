@@ -5,7 +5,7 @@
    committed values remain in place — nothing on the page breaks.
    ================================================================== */
 (function () {
-  const CACHE_BUST = '?t=' + Math.floor(Date.now() / 1000 / 3600); // per-hour cache-bust
+  const CACHE_BUST = '?t=' + Date.now(); // per-request — always get fresh JSON
 
   // ---------- Scholar metrics strip (home page) ----------
   if (document.getElementById('scholar-strip')) {
