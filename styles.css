@@ -339,9 +339,12 @@ section.block.tight { padding: 64px 0; }
 .doc-card:hover .open { color: var(--coral); }
 
 /* ============ CONTACT ============ */
-.contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 50px; align-items: start; }
-.contact-info { display: grid; gap: 22px; }
-.contact-line { display: flex; gap: 16px; align-items: flex-start; }
+.contact-grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: 60px; align-items: center; }
+.contact-info { display: grid; gap: 30px; }
+.contact-info-head { margin-bottom: 8px; }
+.contact-info-head h2 { font-family: "Fraunces", serif; font-weight: 600; font-size: 1.75rem; margin: 6px 0 10px; line-height: 1.2; }
+.contact-info-head p { color: var(--ink-soft); margin: 0; font-size: 1rem; line-height: 1.6; }
+.contact-line { display: flex; gap: 18px; align-items: center; }
 .contact-line .ci {
   width: 46px; height: 46px; border-radius: 12px; background: var(--ivory-deep);
   display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0;
