@@ -350,6 +350,8 @@ section.block.tight { padding: 64px 0; }
 .contact-line p, .contact-line a { margin: 0; color: var(--ink-soft); text-decoration: none; font-size: .98rem; }
 .contact-line a:hover { color: var(--coral); }
 .form-card { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 36px; box-shadow: var(--shadow); }
+.form-card.form-embed { padding: 0; overflow: hidden; background: #fff; }
+.form-card.form-embed iframe { display: block; width: 100%; border: 0; min-height: 900px; border-radius: 22px; }
 .field { margin-bottom: 18px; }
 .field label { display: block; font-size: .82rem; font-weight: 600; margin-bottom: 7px; color: var(--ink); }
 .field input, .field textarea {

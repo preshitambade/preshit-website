@@ -55,46 +55,27 @@
         </div>
 
         <!--
-          Contact form — powered by Formsubmit.co (free, no signup, unlimited)
-          Delivery target is set in the action attribute below. First submission triggers
-          a one-time activation email to that address; click the confirmation link in it
-          and every subsequent message lands in the inbox directly.
+          Contact form — Google Forms embed.
+          Responses land in preshitambade@gmail.com (via the form's built-in email
+          notifications, which you enabled in the form's Responses tab).
 
-          To hide the email from the page's HTML source (nicer for privacy):
-            1) Go to https://formsubmit.co
-            2) Enter preshitambade@gmail.com; you'll be redirected to a page showing
-               a hashed URL like https://formsubmit.co/el/xxxxxxxx
-            3) Replace the `action=` URL below with that hashed URL and remove the email.
+          TO ACTIVATE:
+            1) Create the form at https://forms.google.com (Name / Email / Subject / Message)
+            2) Click "Send" → the "< >" (Embed HTML) tab
+            3) Copy the src URL from the iframe and paste it below in place of YOUR_FORM_ID
+               The URL looks like: https://docs.google.com/forms/d/e/1FAI…/viewform?embedded=true
         -->
-        <form class="form-card reveal"
-              action="https://formsubmit.co/preshitambade@gmail.com"
-              method="POST">
-          <input type="hidden" name="_subject" value="New message from preshitambade.com">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://preshitambade.github.io/preshit-website/contact.html?sent=1">
-          <!-- honeypot: bots often fill this hidden field; real users don't -->
-          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
-
-          <div class="field">
-            <label for="name">Your name</label>
-            <input type="text" id="name" name="name" required />
-          </div>
-          <div class="field">
-            <label for="email">Your email</label>
-            <input type="email" id="email" name="email" required />
-          </div>
-          <div class="field">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send message →</button>
-          <p id="form-status" style="margin:14px 0 0;font-size:.88rem;color:var(--ink-soft);text-align:center"></p>
-        </form>
+        <div class="form-card reveal form-embed">
+          <iframe
+            src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true"
+            title="Contact form"
+            loading="lazy"
+            width="100%"
+            height="900"
+            frameborder="0" marginheight="0" marginwidth="0">
+            Loading form…
+          </iframe>
+        </div>
       </div>
     </div>
   </section>
@@ -116,21 +97,5 @@
   </footer>
 
   <script src="main.js"></script>
-  <script>
-    // Show a success confirmation when Formsubmit sends the visitor back with ?sent=1
-    if (new URLSearchParams(location.search).get('sent') === '1') {
-      const s = document.getElementById('form-status');
-      if (s) {
-        s.textContent = '✅ Thanks — your message was sent. I’ll get back to you as soon as I can.';
-        s.style.color = 'var(--teal-500)';
-        s.style.fontWeight = '600';
-      }
-      // hide the form itself so the visitor sees the confirmation clearly
-      const form = document.querySelector('.form-card');
-      if (form) {
-        form.querySelectorAll('.field, button[type="submit"]').forEach(el => el.style.display = 'none');
-      }
-    }
-  </script>
 </body>
 </html>
