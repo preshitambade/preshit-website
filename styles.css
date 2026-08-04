@@ -786,7 +786,9 @@ footer .copy { font-size: .82rem; color: #6f938c; margin-top: 18px; }
     display: flex; flex-direction: column; position: absolute; top: 100%; right: 26px;
     background: #fff; padding: 18px 24px; border-radius: 16px; box-shadow: var(--shadow); gap: 16px;
   }
-  .navlinks.open a { color: var(--ink); }
+  /* Override the hero-nav white color so mobile-menu items stay dark on the white dropdown, regardless of scroll state */
+  header.nav:not(.scrolled) .navlinks.open a,
+  header.nav.scrolled .navlinks.open a { color: var(--ink); }
   .interests-cta { padding: 40px 28px; }
   .paper { grid-template-columns: 1fr; }
   .page-hero { padding-top: 130px; }
