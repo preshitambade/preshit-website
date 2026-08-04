@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /augusta-scale.html
+Disallow: /augusta-assessment.html
+
+Sitemap: https://www.preshitambade.com/sitemap.xml
