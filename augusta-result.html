@@ -85,7 +85,7 @@
 
         <!-- Personal & professional fulfillment items -->
         <div class="domain-scores" id="fulfillmentBlock" style="display:none">
-          <h3>Personal &amp; professional fulfillment</h3>
+          <h3>Personal &amp; Professional Fulfillment</h3>
           <p style="text-align:center;margin:-6px 0 18px;font-size:.88rem;color:var(--ink-soft)">
             Each area rated 1–5. A score above 4 suggests the area is important to your fulfillment.
           </p>
@@ -180,14 +180,14 @@
     const qol     = p.get('qol')     !== null ? Number(p.get('qol'))     : null;
 
     const indicators = [];
-    if (lonely !== null && !isNaN(lonely)) {
-      const isLonely = lonely >= 6;
+    if (qol !== null && !isNaN(qol)) {
+      const highQoL = qol >= 1;
       indicators.push({
-        label:  'Loneliness',
-        value:  lonely + ' / 9',
-        tone:   isLonely ? 'warn' : 'ok',
-        chip:   isLonely ? 'May indicate loneliness' : 'No loneliness indicated',
-        note:   'Scores of 6 or higher may indicate loneliness.'
+        label:  'Quality of Life',
+        value:  highQoL ? 'High' : 'Lower',
+        tone:   highQoL ? 'ok' : 'warn',
+        chip:   highQoL ? 'High quality of life' : 'Lower quality of life',
+        note:   'A score of 1 indicates high quality of life.'
       });
     }
     if (burnout !== null && !isNaN(burnout)) {
@@ -200,14 +200,14 @@
         note:   'A score of 1 suggests possible burnout.'
       });
     }
-    if (qol !== null && !isNaN(qol)) {
-      const highQoL = qol >= 1;
+    if (lonely !== null && !isNaN(lonely)) {
+      const isLonely = lonely >= 6;
       indicators.push({
-        label:  'Quality of Life',
-        value:  highQoL ? 'High' : 'Lower',
-        tone:   highQoL ? 'ok' : 'warn',
-        chip:   highQoL ? 'High quality of life' : 'Lower quality of life',
-        note:   'A score of 1 indicates high quality of life.'
+        label:  'Loneliness',
+        value:  lonely + ' / 9',
+        tone:   isLonely ? 'warn' : 'ok',
+        chip:   isLonely ? 'May indicate loneliness' : 'No loneliness indicated',
+        note:   'Scores of 6 or higher may indicate loneliness.'
       });
     }
     if (indicators.length) {
