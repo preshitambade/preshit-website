@@ -291,8 +291,12 @@
     }
 
     // SVG bell curve with user marker
+    // Labels are on DIFFERENT rows (you-above / mean-below) so they never overlap,
+    // regardless of how close the user score is to the population mean.
     function drawBell(mean, sd, userScore) {
       const W = 500, H = 180;
+      const topPad = 26;    // room for "you: X" label above the chart
+      const bottomPad = 32; // room for "mean: X" label below the chart
       const minX = mean - 3.5 * sd;
       const maxX = mean + 3.5 * sd;
       const clampedScore = Math.max(minX, Math.min(maxX, userScore));
@@ -309,14 +313,16 @@
       path += ' L' + W + ',' + H + ' Z';
 
       const userX = ((clampedScore - minX) / (maxX - minX)) * W;
+      const meanX = ((mean - minX) / (maxX - minX)) * W;
 
       return `
-        <svg viewBox="0 0 ${W} ${H+30}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Peer-distribution bell curve">
+        <svg viewBox="0 -${topPad} ${W} ${H+topPad+bottomPad}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Peer-distribution bell curve">
           <path d="${path}" fill="rgba(79,179,163,0.28)" stroke="#1b6b5f" stroke-width="2"/>
+          <line x1="${meanX}" y1="0" x2="${meanX}" y2="${H}" stroke="#46524f" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
           <line x1="${userX}" y1="6" x2="${userX}" y2="${H}" stroke="#ff6b52" stroke-width="3"/>
           <circle cx="${userX}" cy="6" r="6" fill="#ff6b52"/>
-          <text x="${userX}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#ff6b52">you: ${userScore}</text>
-          <text x="${(mean-minX)/(maxX-minX)*W}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#46524f">mean: ${mean}</text>
+          <text x="${userX}" y="-8" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#ff6b52">you: ${userScore}</text>
+          <text x="${meanX}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#46524f">group mean: ${mean}</text>
         </svg>`;
     }
   })();
