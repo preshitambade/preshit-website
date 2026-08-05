@@ -77,6 +77,21 @@
           </p>
         </div>
 
+        <!-- Additional well-being indicators (loneliness, burnout, QoL) -->
+        <div class="domain-scores" id="indicatorsBlock" style="display:none">
+          <h3>Additional well-being indicators</h3>
+          <div id="indicatorRows"></div>
+        </div>
+
+        <!-- Personal & professional fulfillment items -->
+        <div class="domain-scores" id="fulfillmentBlock" style="display:none">
+          <h3>Personal &amp; professional fulfillment</h3>
+          <p style="text-align:center;margin:-6px 0 18px;font-size:.88rem;color:var(--ink-soft)">
+            Each area rated 1–5. A score above 4 suggests the area is important to your fulfillment.
+          </p>
+          <div id="fulfillmentRows"></div>
+        </div>
+
         <div class="disclaimer">
           <strong>Please note:</strong> This tool is intended for reflection and research only. It is not a diagnostic instrument and does not replace advice from a mental-health or medical professional. Comparison statistics are based on our validation sample and are indicative rather than definitive.
         </div>
@@ -158,6 +173,88 @@
           <div class="ds-track"><div class="ds-fill ds-color-${d.key}" style="width:${pct}%"></div></div>
         </div>`;
     }).join('');
+
+    // ---- Additional well-being indicators (loneliness, burnout, QoL) ----
+    const lonely  = p.get('lonely')  !== null ? Number(p.get('lonely'))  : null;
+    const burnout = p.get('burnout') !== null ? Number(p.get('burnout')) : null;
+    const qol     = p.get('qol')     !== null ? Number(p.get('qol'))     : null;
+
+    const indicators = [];
+    if (lonely !== null && !isNaN(lonely)) {
+      const isLonely = lonely >= 6;
+      indicators.push({
+        label:  'Loneliness',
+        value:  lonely + ' / 9',
+        tone:   isLonely ? 'warn' : 'ok',
+        chip:   isLonely ? 'May indicate loneliness' : 'No loneliness indicated',
+        note:   'Scores of 6 or higher may indicate loneliness.'
+      });
+    }
+    if (burnout !== null && !isNaN(burnout)) {
+      const isBurnout = burnout >= 1;
+      indicators.push({
+        label:  'Burnout',
+        value:  burnout ? 'Yes' : 'No',
+        tone:   isBurnout ? 'warn' : 'ok',
+        chip:   isBurnout ? 'May be experiencing burnout' : 'No burnout signs',
+        note:   'A score of 1 suggests possible burnout.'
+      });
+    }
+    if (qol !== null && !isNaN(qol)) {
+      const highQoL = qol >= 1;
+      indicators.push({
+        label:  'Quality of Life',
+        value:  highQoL ? 'High' : 'Lower',
+        tone:   highQoL ? 'ok' : 'warn',
+        chip:   highQoL ? 'High quality of life' : 'Lower quality of life',
+        note:   'A score of 1 indicates high quality of life.'
+      });
+    }
+    if (indicators.length) {
+      document.getElementById('indicatorsBlock').style.display = '';
+      document.getElementById('indicatorRows').innerHTML = indicators.map(ind => `
+        <div class="ds-row" style="align-items:center">
+          <div class="ds-meta">
+            <span class="ds-name">${ind.label}</span>
+            <span class="ds-value">${ind.value}
+              <span style="display:inline-block;margin-left:10px;padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:600;
+                ${ind.tone === 'ok' ? 'background:#d2ebe4;color:#16695c' : 'background:#ffe3dc;color:#c93b1e'}">${ind.chip}</span>
+            </span>
+          </div>
+          <div style="font-size:.78rem;color:var(--ink-soft);margin-top:2px">${ind.note}</div>
+        </div>
+      `).join('');
+    }
+
+    // ---- Personal & professional fulfillment items (7 items, each 1-5) ----
+    const fulfillmentItems = [
+      { key: 'career',        label: 'Career' },
+      { key: 'community',     label: 'Community & citizenship' },
+      { key: 'hobbies',       label: 'Discretionary time & hobbies' },
+      { key: 'faith',         label: 'Faith' },
+      { key: 'finances',      label: 'Finances' },
+      { key: 'health',        label: 'Health' },
+      { key: 'relationships', label: 'Relationships' }
+    ].map(i => ({ ...i, score: Number(p.get('f_' + i.key)) })).filter(i => !isNaN(i.score) && i.score > 0);
+
+    if (fulfillmentItems.length) {
+      document.getElementById('fulfillmentBlock').style.display = '';
+      document.getElementById('fulfillmentRows').innerHTML = fulfillmentItems.map(i => {
+        const pct = Math.round((i.score / 5) * 100);
+        const important = i.score >= 4;
+        const barColor = important
+          ? 'linear-gradient(90deg,#4fb3a3,#1b6b5f)'
+          : 'linear-gradient(90deg,#e8b04b,#c9a86a)';
+        return `
+          <div class="ds-row">
+            <div class="ds-meta">
+              <span class="ds-name">${i.label}${important ? ' <span style="color:var(--coral);font-size:.85rem;margin-left:6px">★ important</span>' : ''}</span>
+              <span class="ds-value">${i.score} / 5</span>
+            </div>
+            <div class="ds-track"><div class="ds-fill" style="width:${pct}%;background:${barColor}"></div></div>
+          </div>`;
+      }).join('');
+    }
 
     // ---- Peer comparison (fetch reference JSON) ----
     fetch('data/augusta-reference.json?t=' + Date.now())
