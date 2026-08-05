@@ -1,4 +1,3 @@
 User-agent: *
-Disallow: /augusta-scale.html
 
 Sitemap: https://www.preshitambade.com/sitemap.xml
