@@ -1,0 +1,42 @@
+{
+  "updated": "2026-11-20",
+  "_note": "HYPOTHETICAL reference stats for demonstration only. Replace with real per-profession means, SDs, and n from your validation sample once available. Compute in R with: data %>% group_by(profession) %>% summarise(n=n(), mean=mean(total), sd=sd(total)).",
+  "professions": {
+    "physician": {
+      "label": "physicians",
+      "n": 123,
+      "mean": 72.5,
+      "sd": 11.8
+    },
+    "nurse": {
+      "label": "nurses",
+      "n": 98,
+      "mean": 68.3,
+      "sd": 13.2
+    },
+    "public_health": {
+      "label": "public-health professionals",
+      "n": 87,
+      "mean": 74.1,
+      "sd": 10.6
+    },
+    "researcher": {
+      "label": "academic researchers",
+      "n": 64,
+      "mean": 76.2,
+      "sd": 11.1
+    },
+    "administrator": {
+      "label": "health administrators",
+      "n": 71,
+      "mean": 71.0,
+      "sd": 12.5
+    },
+    "other": {
+      "label": "the reference sample",
+      "n": 442,
+      "mean": 72.0,
+      "sd": 12.0
+    }
+  }
+}

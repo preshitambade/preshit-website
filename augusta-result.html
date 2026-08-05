@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Augusta+ Scale Results | Preshit Ambade</title>
+  <meta name="description" content="Personal Augusta+ Scale results — total score, tier, per-domain breakdown, and comparison against your peer group." />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .result-shell { max-width: 780px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 44px 44px 36px; box-shadow: var(--shadow); }
+    .bell-wrap { background: var(--ivory-deep); border-radius: 16px; padding: 26px 20px 18px; margin: 22px 0; }
+    .bell-wrap svg { display: block; width: 100%; height: auto; max-width: 100%; }
+    .bell-caption { text-align: center; margin: 12px 0 0; font-size: .88rem; color: var(--ink-soft); }
+    .bell-caption strong { color: var(--coral); font-size: 1rem; }
+    .compare-lede { font-family: "Fraunces", serif; font-size: 1.35rem; line-height: 1.4; color: var(--ink); margin: 0 0 6px; text-align: center; }
+    .compare-lede em { font-style: normal; color: var(--coral); font-weight: 600; }
+    @media (max-width: 640px) {
+      .result-shell { padding: 26px 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav" id="nav">
+    <div class="wrap navbar">
+      <a href="index.html" class="brand">Preshit <b>Ambade</b></a>
+      <nav class="navlinks" id="navlinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="writing.html">Writing</a>
+        <a href="augusta-scale.html">Augusta+ Scale</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </nav>
+      <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </header>
+
+  <section class="page-hero" style="padding-bottom:40px">
+    <div class="aurora"><span class="b1"></span><span class="b2"></span><span class="b3"></span></div>
+    <div class="wrap">
+      <span class="eyebrow" style="color:var(--gold)">Augusta+ Scale Results</span>
+      <h1>Your workplace well-being profile</h1>
+      <p>Below is your total score, tier, and how you compare with peers in the same profession from our validation sample.</p>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:40px">
+    <div class="wrap">
+      <div class="result-shell reveal" id="resultShell">
+
+        <div class="result-hero">
+          <p class="q-hint" style="margin:0">Your Augusta+ Scale score</p>
+          <div class="result-score" id="resScore">—</div>
+          <div class="result-tier" id="resTier">—</div>
+          <div class="result-gauge"><div class="result-marker" id="resMarker" style="left:50%"></div></div>
+          <div class="gauge-labels"><span>Low</span><span>Moderate</span><span>High</span></div>
+        </div>
+
+        <!-- Peer comparison -->
+        <div class="bell-wrap" id="compareBox">
+          <p class="compare-lede" id="compareLede">Loading peer comparison…</p>
+          <div id="bellCurve"></div>
+          <p class="bell-caption" id="bellCaption"></p>
+        </div>
+
+        <!-- Per-domain scores -->
+        <div class="domain-scores" id="domainScores">
+          <h3>Your score by domain</h3>
+          <div id="domainRows"></div>
+          <p style="text-align:center;margin-top:16px;font-size:.82rem;color:var(--ink-soft)">
+            Domains adapted from the <a href="https://www.hhs.gov/surgeongeneral/priorities/workplace-well-being/index.html" target="_blank" rel="noopener" style="color:var(--coral);font-weight:600;text-decoration:none">US Surgeon General&rsquo;s Framework for Workplace Mental Health &amp; Well-Being</a>.
+          </p>
+        </div>
+
+        <div class="disclaimer">
+          <strong>Please note:</strong> This tool is intended for reflection and research only. It is not a diagnostic instrument and does not replace advice from a mental-health or medical professional. Comparison statistics are based on our validation sample and are indicative rather than definitive.
+        </div>
+
+        <div class="result-actions">
+          <a class="btn btn-outline" href="augusta-scale.html">About the scale</a>
+          <a class="btn btn-primary" href="https://cmich.co1.qualtrics.com/jfe/form/SV_cLO0unM9GC0UxYq" target="_blank" rel="noopener">Take again</a>
+        </div>
+
+      </div>
+
+      <p class="assessment-notice">🔒 Do not print, store, or copy this page.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="fbrand">Preshit <b>Ambade</b></div>
+      <div class="flinks">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <a href="teaching.html">Teaching</a>
+        <a href="writing.html">Writing</a>
+        <a href="augusta-scale.html">Augusta+ Scale</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="copy">© <span id="year">2026</span> Dr. Preshit Nemdas Ambade · Mount Pleasant, MI</div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+  (function () {
+    // ---- Read URL params ----
+    const p = new URLSearchParams(location.search);
+    const prof   = (p.get('prof') || 'other').toLowerCase();
+    const tier   = p.get('tier')  || '—';
+    const score  = Number(p.get('score')) || 0;
+    const maxSc  = Number(p.get('max'))   || 110;
+
+    const domains = [
+      { key: 'protection', label: 'Protection from Harm' },
+      { key: 'connection', label: 'Connection & Community' },
+      { key: 'harmony',    label: 'Work-Life Harmony' },
+      { key: 'mattering',  label: 'Mattering at Work' },
+      { key: 'growth',     label: 'Opportunity for Growth' }
+    ].map(d => ({
+      ...d,
+      score: Number(p.get('d_' + d.key)) || 0,
+      max:   Number(p.get('d_' + d.key + '_max')) || 0
+    }));
+
+    // ---- Render total score + tier ----
+    document.getElementById('resScore').textContent = score + ' / ' + maxSc;
+
+    const tierEl = document.getElementById('resTier');
+    const tierNorm = String(tier).toLowerCase();
+    let tierClass = 'tier-mod';
+    if (tierNorm.includes('low'))  tierClass = 'tier-low';
+    if (tierNorm.includes('high')) tierClass = 'tier-high';
+    tierEl.textContent = tier.toUpperCase();
+    tierEl.className = 'result-tier ' + tierClass;
+
+    // ---- Gauge marker (position along 0-max) ----
+    const gaugePct = Math.max(2, Math.min(98, Math.round((score / maxSc) * 100)));
+    document.getElementById('resMarker').style.left = gaugePct + '%';
+
+    // ---- Per-domain bars ----
+    const domainRows = document.getElementById('domainRows');
+    domainRows.innerHTML = domains.map(d => {
+      if (d.max === 0) return '';
+      const pct = Math.round((d.score / d.max) * 100);
+      return `
+        <div class="ds-row">
+          <div class="ds-meta">
+            <span class="ds-name">${d.label}</span>
+            <span class="ds-value">${d.score} / ${d.max} · ${pct}%</span>
+          </div>
+          <div class="ds-track"><div class="ds-fill ds-color-${d.key}" style="width:${pct}%"></div></div>
+        </div>`;
+    }).join('');
+
+    // ---- Peer comparison (fetch reference JSON) ----
+    fetch('data/augusta-reference.json?t=' + Date.now())
+      .then(r => r.json())
+      .then(ref => {
+        const rec = ref.professions[prof] || ref.professions.other;
+        const percentile = Math.round(normalCDF((score - rec.mean) / rec.sd) * 100);
+        const higherOrLower = percentile >= 50 ? 'higher than' : 'lower than';
+        const pctShown = percentile >= 50 ? percentile : 100 - percentile;
+
+        document.getElementById('compareLede').innerHTML =
+          `You scored <em>${score}</em>, ${higherOrLower} <em>${pctShown}%</em> of ${rec.label} in our validation sample (n = ${rec.n}).`;
+
+        document.getElementById('bellCurve').innerHTML = drawBell(rec.mean, rec.sd, score);
+
+        document.getElementById('bellCaption').innerHTML =
+          `Reference group mean: <strong>${rec.mean}</strong> (SD ${rec.sd}) · your score is marked in coral.`;
+      })
+      .catch(() => {
+        document.getElementById('compareBox').style.display = 'none';
+      });
+
+    // ---- Helpers ----
+
+    // Abramowitz–Stegun normal CDF approximation
+    function normalCDF(z) {
+      const a1= 0.254829592, a2=-0.284496736, a3= 1.421413741,
+            a4=-1.453152027, a5= 1.061405429, pC=0.3275911;
+      const sign = z < 0 ? -1 : 1;
+      const x = Math.abs(z) / Math.sqrt(2);
+      const t = 1.0 / (1.0 + pC * x);
+      const y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t * Math.exp(-x*x);
+      return 0.5 * (1.0 + sign * y);
+    }
+
+    // SVG bell curve with user marker
+    function drawBell(mean, sd, userScore) {
+      const W = 500, H = 180;
+      const minX = mean - 3.5 * sd;
+      const maxX = mean + 3.5 * sd;
+      const clampedScore = Math.max(minX, Math.min(maxX, userScore));
+
+      let path = 'M0,' + H;
+      const N = 120;
+      for (let i = 0; i <= N; i++) {
+        const x = minX + (maxX - minX) * (i / N);
+        const dens = Math.exp(-0.5 * Math.pow((x - mean) / sd, 2));
+        const px = (i / N) * W;
+        const py = H - (dens * (H - 18)) - 10;
+        path += ' L' + px.toFixed(1) + ',' + py.toFixed(1);
+      }
+      path += ' L' + W + ',' + H + ' Z';
+
+      const userX = ((clampedScore - minX) / (maxX - minX)) * W;
+
+      return `
+        <svg viewBox="0 0 ${W} ${H+30}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Peer-distribution bell curve">
+          <path d="${path}" fill="rgba(79,179,163,0.28)" stroke="#1b6b5f" stroke-width="2"/>
+          <line x1="${userX}" y1="6" x2="${userX}" y2="${H}" stroke="#ff6b52" stroke-width="3"/>
+          <circle cx="${userX}" cy="6" r="6" fill="#ff6b52"/>
+          <text x="${userX}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#ff6b52">you: ${userScore}</text>
+          <text x="${(mean-minX)/(maxX-minX)*W}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#46524f">mean: ${mean}</text>
+        </svg>`;
+    }
+  })();
+  </script>
+</body>
+</html>
