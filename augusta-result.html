@@ -261,21 +261,31 @@
       .then(r => r.json())
       .then(ref => {
         const rec = ref.professions[prof] || ref.professions.other;
-        const percentile = Math.round(normalCDF((score - rec.mean) / rec.sd) * 100);
-        const higherOrLower = percentile >= 50 ? 'higher than' : 'lower than';
-        const pctShown = percentile >= 50 ? percentile : 100 - percentile;
+        // Use provided percentiles if available, else approximate from mean+SD (normal)
+        const p25 = rec.p25 != null ? rec.p25 : Math.round(rec.mean - 0.6745 * rec.sd);
+        const p50 = rec.p50 != null ? rec.p50 : Math.round(rec.mean);
+        const p75 = rec.p75 != null ? rec.p75 : Math.round(rec.mean + 0.6745 * rec.sd);
+
+        const percentile = Math.max(1, Math.min(99, Math.round(normalCDF((score - rec.mean) / rec.sd) * 100)));
+        const suffix = ordinalSuffix(percentile);
 
         document.getElementById('compareLede').innerHTML =
-          `You scored <em>${score}</em>, ${higherOrLower} <em>${pctShown}%</em> of ${rec.label} in our validation sample (n = ${rec.n}).`;
+          `You scored <em>${score}</em> — at the <em>${percentile}${suffix} percentile</em> among ${rec.label} (n = ${rec.n}).`;
 
-        document.getElementById('bellCurve').innerHTML = drawBell(rec.mean, rec.sd, score);
+        document.getElementById('bellCurve').innerHTML = drawBell(rec.mean, rec.sd, score, p25, p50, p75);
 
         document.getElementById('bellCaption').innerHTML =
-          `Reference group mean: <strong>${rec.mean}</strong> (SD ${rec.sd}) · your score is marked in coral.`;
+          `The three ticks below the curve mark the 25th, 50th (median), and 75th percentiles of the reference sample.`;
       })
       .catch(() => {
         document.getElementById('compareBox').style.display = 'none';
       });
+
+    function ordinalSuffix(n) {
+      const s = ['th','st','nd','rd'];
+      const v = n % 100;
+      return s[(v - 20) % 10] || s[v] || s[0];
+    }
 
     // ---- Helpers ----
 
@@ -290,13 +300,13 @@
       return 0.5 * (1.0 + sign * y);
     }
 
-    // SVG bell curve with user marker
-    // Labels are on DIFFERENT rows (you-above / mean-below) so they never overlap,
-    // regardless of how close the user score is to the population mean.
-    function drawBell(mean, sd, userScore) {
+    // SVG bell curve with user marker + p25/p50/p75 tick labels below.
+    // User label sits above the chart, percentile labels sit below — different rows,
+    // no overlap possible regardless of horizontal proximity.
+    function drawBell(mean, sd, userScore, p25, p50, p75) {
       const W = 500, H = 180;
       const topPad = 26;    // room for "you: X" label above the chart
-      const bottomPad = 32; // room for "mean: X" label below the chart
+      const bottomPad = 44; // room for percentile ticks below (two-line labels)
       const minX = mean - 3.5 * sd;
       const maxX = mean + 3.5 * sd;
       const clampedScore = Math.max(minX, Math.min(maxX, userScore));
@@ -313,16 +323,24 @@
       path += ' L' + W + ',' + H + ' Z';
 
       const userX = ((clampedScore - minX) / (maxX - minX)) * W;
-      const meanX = ((mean - minX) / (maxX - minX)) * W;
+      const xFor = v => ((v - minX) / (maxX - minX)) * W;
+      const p25X = xFor(p25), p50X = xFor(p50), p75X = xFor(p75);
+
+      // Percentile tick lines (subtle dashed) + two-line labels below the curve
+      const tick = (x, name, val) => `
+        <line x1="${x}" y1="${H-4}" x2="${x}" y2="${H+8}" stroke="#46524f" stroke-width="1"/>
+        <text x="${x}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#46524f">${name}</text>
+        <text x="${x}" y="${H+36}" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#8a8375">${val}</text>`;
 
       return `
-        <svg viewBox="0 -${topPad} ${W} ${H+topPad+bottomPad}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Peer-distribution bell curve">
+        <svg viewBox="0 -${topPad} ${W} ${H+topPad+bottomPad}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="Peer-distribution bell curve with percentile ticks">
           <path d="${path}" fill="rgba(79,179,163,0.28)" stroke="#1b6b5f" stroke-width="2"/>
-          <line x1="${meanX}" y1="0" x2="${meanX}" y2="${H}" stroke="#46524f" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+          ${tick(p25X, '25th', p25)}
+          ${tick(p50X, 'median', p50)}
+          ${tick(p75X, '75th', p75)}
           <line x1="${userX}" y1="6" x2="${userX}" y2="${H}" stroke="#ff6b52" stroke-width="3"/>
           <circle cx="${userX}" cy="6" r="6" fill="#ff6b52"/>
           <text x="${userX}" y="-8" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#ff6b52">you: ${userScore}</text>
-          <text x="${meanX}" y="${H+22}" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#46524f">group mean: ${mean}</text>
         </svg>`;
     }
   })();

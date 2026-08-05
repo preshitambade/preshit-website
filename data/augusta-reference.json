@@ -1,42 +1,60 @@
 {
   "updated": "2026-11-20",
-  "_note": "HYPOTHETICAL reference stats for demonstration only. Replace with real per-profession means, SDs, and n from your validation sample once available. Compute in R with: data %>% group_by(profession) %>% summarise(n=n(), mean=mean(total), sd=sd(total)).",
+  "_note": "HYPOTHETICAL reference stats for demonstration only. Replace with real per-profession n, mean, sd, and p25/p50/p75 from your validation sample. Compute in R with: data %>% group_by(profession) %>% summarise(n=n(), mean=mean(total), sd=sd(total), p25=quantile(total,.25), p50=median(total), p75=quantile(total,.75)). If p25/p50/p75 are omitted, they'll be approximated from mean+SD.",
   "professions": {
     "physician": {
       "label": "physicians",
       "n": 123,
       "mean": 72.5,
-      "sd": 11.8
+      "sd": 11.8,
+      "p25": 65,
+      "p50": 73,
+      "p75": 80
     },
     "nurse": {
       "label": "nurses",
       "n": 98,
       "mean": 68.3,
-      "sd": 13.2
+      "sd": 13.2,
+      "p25": 60,
+      "p50": 68,
+      "p75": 77
     },
     "public_health": {
       "label": "public-health professionals",
       "n": 87,
       "mean": 74.1,
-      "sd": 10.6
+      "sd": 10.6,
+      "p25": 67,
+      "p50": 74,
+      "p75": 81
     },
     "researcher": {
       "label": "academic researchers",
       "n": 64,
       "mean": 76.2,
-      "sd": 11.1
+      "sd": 11.1,
+      "p25": 68,
+      "p50": 76,
+      "p75": 84
     },
     "administrator": {
       "label": "health administrators",
       "n": 71,
       "mean": 71.0,
-      "sd": 12.5
+      "sd": 12.5,
+      "p25": 63,
+      "p50": 71,
+      "p75": 79
     },
     "other": {
       "label": "the reference sample",
       "n": 442,
       "mean": 72.0,
-      "sd": 12.0
+      "sd": 12.0,
+      "p25": 64,
+      "p50": 72,
+      "p75": 80
     }
   }
 }
