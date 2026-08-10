@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-03",
+  "updated": "2026-08-10",
   "source": "ORCID 0000-0002-6919-7206",
   "publications": [
     {
@@ -9,6 +9,14 @@
       "venue": "Archives of Gerontology and Geriatrics",
       "doi": "10.1016/j.archger.2026.106255",
       "url": "https://doi.org/10.1016/j.archger.2026.106255"
+    },
+    {
+      "authors": "Preshit Ambade, Caleb Zimmerman, Christya Haddad, Madison Miller, Munira Gunja, Neil J. MacKinnon",
+      "year": 2026,
+      "title": "Telehealth Use and Satisfaction in Primary and Mental Health Care Across Nine High-Income Countries",
+      "venue": "Mayo Clinic Proceedings: Digital Health",
+      "doi": "10.1016/j.mcpdig.2026.100390",
+      "url": "https://doi.org/10.1016/j.mcpdig.2026.100390"
     },
     {
       "authors": "Heather Naylor, Wooje Choi, Michael LeBlanc, Sheri Andrews, Preshit Ambade, Breagh MacKinnon, Neil MacKinnon",
