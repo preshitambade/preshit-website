@@ -19,18 +19,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: pip install scholarly
-
-      - name: Fetch publications from ORCID
+            - name: Fetch publications from ORCID
         env:
           ORCID_ID: ${{ secrets.ORCID_ID }}
         run: python scripts/fetch_orcid.py
 
-      - name: Fetch Scholar metrics
+      - name: Fetch metrics from OpenAlex
         env:
-          SCHOLAR_USER: ${{ secrets.SCHOLAR_USER }}
-        run: python scripts/fetch_scholar.py
+          ORCID_ID: ${{ secrets.ORCID_ID }}
+        run: python scripts/fetch_openalex.py
 
       - name: Commit any changes
         run: |
