@@ -28,9 +28,14 @@ def main():
 
     try:
         from scholarly import scholarly
-    except ImportError:
-        print("scholarly not installed. Run: pip install scholarly", file=sys.stderr)
-        sys.exit(1)
+    except Exception as e:
+        # Scholarly can fail to import even when installed (e.g. broken transitive
+        # deps, selenium/webdriver issues on CI). Treat as non-fatal so the ORCID
+        # changes from the earlier step still get committed.
+        print(f"Could not import scholarly ({type(e).__name__}: {e}). "
+              f"Keeping previous Scholar metrics.", 
+    file=sys.stderr)
+        sys.exit(0)
 
     print(f"Fetching Scholar profile for user_id={user_id} …")
     try:
