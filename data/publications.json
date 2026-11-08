@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-07",
+  "updated": "2026-11-08",
   "source": "ORCID 0000-0002-6919-7206",
   "publications": [
     {
@@ -9,6 +9,14 @@
       "venue": "Mayo Clinic Proceedings: Digital Health",
       "doi": "10.1016/j.mcpdig.2026.100390",
       "url": "https://doi.org/10.1016/j.mcpdig.2026.100390"
+    },
+    {
+      "authors": "Kate Hodgkins, Preshit N. Ambade, Zach Hoffman, Paige Weid, Neil J. MacKinnon",
+      "year": 2026,
+      "title": "Workplace mental health and well-being, loneliness, and fulfillment in the National Academies of Practice",
+      "venue": "Journal of Interprofessional Education & Practice",
+      "doi": "10.1016/j.xjep.2026.100867",
+      "url": "https://doi.org/10.1016/j.xjep.2026.100867"
     },
     {
       "authors": "Preshit N. Ambade, Caleb Zimmerman, Christya Haddad, Camryn Koperski, Ghulam Rashid, Ahmad Kafri, Fuad Yazdani, Rebecca Hill Renirie, Delicia Pruitt, Neil J MacKinnon",
