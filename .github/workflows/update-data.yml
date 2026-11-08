@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write    # so the job can commit updated JSON back to the repo
+  contents: write  # so the job can commit updated JSON back to the repo
 
 jobs:
   refresh:
@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: "3.11"
 
-            - name: Fetch publications from ORCID
+      - name: Fetch publications from ORCID
         env:
           ORCID_ID: ${{ secrets.ORCID_ID }}
         run: python scripts/fetch_orcid.py
